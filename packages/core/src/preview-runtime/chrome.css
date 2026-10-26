@@ -52,6 +52,13 @@
     /* biome-ignore lint/complexity/noImportantStyles: overrides the inline zoom sizing when printing */
     height: auto !important;
     /* biome-ignore lint/complexity/noImportantStyles: see above */
+    width: auto !important;
+    /* biome-ignore lint/complexity/noImportantStyles: see above */
     padding: 0 !important;
+  }
+  /* Wider than the page, browsers shrink the print to fit and leave a gap on the right. */
+  .pagedjs_pages {
+    /* biome-ignore lint/complexity/noImportantStyles: see above */
+    width: auto !important;
   }
 }

@@ -1,4 +1,5 @@
 import { fixture, newDoc, switchToPage } from './helpers/app.ts';
+import { renderPages } from './helpers/pdf.ts';
 import { expect, test } from './helpers/test.ts';
 
 test('E5: keep-together — no stranded headings, fitting blocks not split, oversized reported', async ({ page }) => {
@@ -125,4 +126,21 @@ test('consecutive page breaks collapse; the &nbsp; trick makes a blank page', as
   await newDoc(page, 'Breaks', 'A\n\n::pagebreak\n::pagebreak\n\nB\n\n::pagebreak\n\n&nbsp;\n\n::pagebreak\n\nC\n');
   const frame = await switchToPage(page);
   await expect(frame.locator('.mdl-page')).toHaveCount(4);
+});
+
+test('printing lays the pages out at page width, whatever the preview zoom', async ({ page }) => {
+  // Anything wider than the page makes browsers shrink the print to fit, leaving a gap on the right.
+  await renderPages(page, '# Wide');
+  const screen = page.viewportSize()!;
+  const pageWidth = await page.evaluate(() => document.querySelector('.pagedjs_page')!.getBoundingClientRect().width);
+  for (const zoom of [1, 0.5, 'fit'] as const) {
+    await page.evaluate((z) => window.postMessage({ type: 'zoom', zoom: z }, location.origin), zoom);
+    // Printing lays the document out in a viewport one page wide.
+    await page.emulateMedia({ media: 'print' });
+    await page.setViewportSize({ width: Math.ceil(pageWidth), height: screen.height });
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow, `zoom ${zoom}`).toBe(0);
+    await page.emulateMedia({ media: 'screen' });
+    await page.setViewportSize(screen);
+  }
 });
