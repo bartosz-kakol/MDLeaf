@@ -1,0 +1,44 @@
+---
+title: Page numbering
+description: "::pagenumber restarts or offsets page numbers."
+---
+
+import LiveExample from '../../../components/LiveExample.astro';
+
+```md
+::pagenumber{start=1}
+::pagenumber{offset=-2}
+```
+
+| Attribute | Value | Meaning |
+| --- | --- | --- |
+| `start` | whole number ≥ 0 | This page becomes `start`; later pages count up |
+| `offset` | whole number, may be negative | This page's number is shifted by `offset`; later pages count up |
+
+Exactly one of the two is required.
+
+<LiveExample name="cover-page" />
+
+## Typical use
+
+```md
+# Report title
+::pagebreak
+::toc
+::pagebreak
+::pagenumber{start=1}
+# Chapter 1
+```
+
+The cover and contents pages are numbered 1 and 2; the first chapter starts again at 1.
+
+## Rules
+
+- The first page is 1. Each page is the previous one plus one, then the page's `::pagenumber` directives apply in order.
+- Numbers can be zero or negative, and are printed as they are. Only Arabic numerals are supported.
+- `{pages}` is the displayed number of the last page, so restarts change it. The table of contents shows displayed numbers too.
+
+## Common mistakes
+
+- `::pagenumber` alone, or with both `start` and `offset`: `directive-attr-invalid`.
+- `::pagenumber{start=i}` — only whole numbers.

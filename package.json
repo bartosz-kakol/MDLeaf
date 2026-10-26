@@ -1,0 +1,32 @@
+{
+  "name": "mdleaf",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @mdleaf/web dev",
+    "build": "pnpm --filter @mdleaf/web build",
+    "build:docs": "pnpm --filter @mdleaf/docs build",
+    "lint": "biome ci .",
+    "format": "biome format --write .",
+    "typecheck": "tsc -p packages/core && tsc -p apps/web && pnpm --filter @mdleaf/docs check",
+    "test": "vitest run",
+    "test:browser": "vitest run --project storage-browser",
+    "e2e": "playwright test",
+    "gen": "pnpm --filter @mdleaf/core gen"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.3",
+    "@playwright/test": "1.64.1",
+    "@types/node": "^22.15.0",
+    "@vitest/browser": "3.2.7",
+    "jsdom": "^26.1.0",
+    "pdfjs-dist": "4.10.38",
+    "playwright": "1.64.1",
+    "typescript": "5.9.3",
+    "vitest": "3.2.7"
+  }
+}

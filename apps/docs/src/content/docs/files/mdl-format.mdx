@@ -1,0 +1,35 @@
+---
+title: The .mdl format
+description: One file with the document, its images and its page setup.
+---
+
+import Shortcut from '../../../components/Shortcut.astro';
+
+An `.mdl` file is a standard **ZIP archive** with a different extension. It contains everything needed to reproduce a document on another device:
+
+```text
+document.md     the Markdown
+doc.json        title, profile reference and per-document overrides
+profile.json    the document's profile
+theme.css       only if the profile uses your own theme
+theme.json      details of that theme (a URL theme keeps its URL)
+assets/…        every image, in the same folders
+```
+
+## Export and import
+
+- **Export .mdl…** (<Shortcut command="file.exportMdl" />) in the editor's ⋯ menu, or in the Library row menu.
+- **Import .mdl** in the Library, or drop `.mdl` files onto the Library. An installed MDLeaf (Chromium) opens `.mdl` files directly.
+
+Importing always creates a new document, even for the same file twice.
+
+## Profiles and themes on import
+
+- If you already have a profile with the same page setup and theme, the document uses it. Otherwise a new profile _Name (imported)_ is created.
+- A built-in theme is used as is. Your own theme is matched by its exact CSS; otherwise it is created from the archive.
+
+## Safety checks
+
+An archive is rejected if `document.md` or `doc.json` is missing, if it contains paths with `..` or absolute paths, any other files outside `assets/`, or more than 500 MB of content.
+
+The samples on this site are `.mdl` files — download any of them from an example and import it.

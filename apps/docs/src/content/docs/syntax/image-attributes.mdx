@@ -1,0 +1,34 @@
+---
+title: Image attributes
+description: Width, height and alignment for images.
+---
+
+import LiveExample from '../../../components/LiveExample.astro';
+
+```md
+![Alt text](assets/figure.png){width=60% align=center}
+![](assets/logo.svg){height=20mm}
+```
+
+An attribute block directly after an inline image — no space in between — sets its size and alignment.
+
+| Key | Values | Effect |
+| --- | --- | --- |
+| `width` | a number with `px`, `%`, `mm`, `cm`, `in` or `pt`; no unit means px | Image width; `%` is relative to the text area |
+| `height` | same as width | Image height |
+| `align` | `left`, `center`, `right` | Puts the image on its own line, aligned |
+
+<LiveExample name="image-attributes" />
+
+## Rules
+
+- Width without height keeps the aspect ratio, and the other way round. With both, the image is fitted inside that box.
+- Images without attributes shrink to the text width (never enlarged). In page view they are also limited to the text height, so they never run off a page.
+- Only `width`, `height` and `align` exist. This is deliberately not a general attribute syntax: `class`, `id` and `style` are ignored with a warning.
+- A `{` that does not form a valid block is shown as text. Attribute blocks work only on inline images `![](…)`, not on reference images.
+
+## Common mistakes
+
+- `![](a.png) {width=50%}` — the space makes it text.
+- `{width=wide}`: `image-attr-invalid`. `{class=round}`: `image-attr-unknown`.
+- An image with an explicit height taller than the page is cut off at the page bottom and reported as oversized.

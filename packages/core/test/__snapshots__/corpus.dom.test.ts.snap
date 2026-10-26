@@ -1,0 +1,497 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`sanitised HTML snapshots > 01-pagebreak.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1">Intro paragraph.</p>
+<div class="mdl-pagebreak" data-src-line="2" data-src-line-end="3" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<p data-src-line="4" data-src-line-end="5">After the break.</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 02-pagebreak-consecutive.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1">A</p>
+<div class="mdl-pagebreak" data-src-line="2" data-src-line-end="3" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<div class="mdl-pagebreak" data-src-line="3" data-src-line-end="4" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<p data-src-line="5" data-src-line-end="6">&nbsp;</p>
+<div class="mdl-pagebreak" data-src-line="7" data-src-line-end="8" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<p data-src-line="9" data-src-line-end="10">B</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 03-toc-default.md 1`] = `
+"<article class="mdl-document">
+<h1 data-src-line="0" data-src-line-end="1">Title</h1>
+<nav class="mdl-toc" data-src-line="2" data-src-line-end="3"><div class="mdl-toc-title" role="heading" aria-level="2">Contents</div><ol class="mdl-toc-list"><li class="mdl-toc-item mdl-toc-item--level-1"><a class="mdl-toc-link" href="#title"><span class="mdl-toc-text">Title</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="title"></span></a></li><li class="mdl-toc-item mdl-toc-item--level-2"><a class="mdl-toc-link" href="#one"><span class="mdl-toc-text">One</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="one"></span></a></li><li class="mdl-toc-item mdl-toc-item--level-3"><a class="mdl-toc-link" href="#oneone"><span class="mdl-toc-text">One.one</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="oneone"></span></a></li><li class="mdl-toc-item mdl-toc-item--level-2"><a class="mdl-toc-link" href="#two"><span class="mdl-toc-text">Two</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="two"></span></a></li></ol></nav>
+<h2 id="one" data-src-line="4" data-src-line-end="5">One</h2>
+<h3 id="oneone" data-src-line="6" data-src-line-end="7">One.one</h3>
+<h4 id="deep" data-src-line="8" data-src-line-end="9">Deep</h4>
+<h2 id="two" data-src-line="10" data-src-line-end="11">Two</h2>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 04-toc-attrs.md 1`] = `
+"<article class="mdl-document">
+<nav class="mdl-toc" data-src-line="0" data-src-line-end="1"><div class="mdl-toc-title" role="heading" aria-level="2">Table of contents</div><ol class="mdl-toc-list"><li class="mdl-toc-item mdl-toc-item--level-1"><a class="mdl-toc-link" href="#a"><span class="mdl-toc-text">A</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="a"></span></a></li><li class="mdl-toc-item mdl-toc-item--level-2"><a class="mdl-toc-link" href="#b"><span class="mdl-toc-text">B</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="b"></span></a></li></ol></nav>
+<h1 id="a" data-src-line="2" data-src-line-end="3">A</h1>
+<h2 id="b" data-src-line="4" data-src-line-end="5">B</h2>
+<h3 id="c" data-src-line="6" data-src-line-end="7">C</h3>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 05-toc-empty-title.md 1`] = `
+"<article class="mdl-document">
+<nav class="mdl-toc" data-src-line="0" data-src-line-end="1"><ol class="mdl-toc-list"><li class="mdl-toc-item mdl-toc-item--level-1"><a class="mdl-toc-link" href="#only"><span class="mdl-toc-text">Only</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="only"></span></a></li></ol></nav>
+<h1 id="only" data-src-line="2" data-src-line-end="3">Only</h1>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 06-toc-invalid-depth.md 1`] = `
+"<article class="mdl-document">
+<h1 id="a" data-src-line="2" data-src-line-end="3">A</h1>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 07-toc-unknown-attr.md 1`] = `
+"<article class="mdl-document">
+<nav class="mdl-toc" data-src-line="0" data-src-line-end="1"><div class="mdl-toc-title" role="heading" aria-level="2">Contents</div><ol class="mdl-toc-list"><li class="mdl-toc-item mdl-toc-item--level-1"><a class="mdl-toc-link" href="#a"><span class="mdl-toc-text">A</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="a"></span></a></li></ol></nav>
+<h1 id="a" data-src-line="2" data-src-line-end="3">A</h1>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 08-header-center.md 1`] = `
+"<article class="mdl-document">
+<div class="mdl-directive mdl-directive--header" data-mdl-kind="header" data-src-line="0" data-src-line-end="1" data-slot-left="" data-slot-center="My Document" data-slot-right=""><span class="mdl-directive-pill">Header: My Document</span></div>
+<p data-src-line="2" data-src-line-end="3">Text.</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 09-header-left-right.md 1`] = `
+"<article class="mdl-document">
+<div class="mdl-directive mdl-directive--header" data-mdl-kind="header" data-src-line="0" data-src-line-end="1" data-slot-left="Left side" data-slot-center="" data-slot-right="Right side"><span class="mdl-directive-pill">Header: Left side · Right side</span></div>
+<p data-src-line="2" data-src-line-end="3">Text.</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 10-header-three.md 1`] = `
+"<article class="mdl-document">
+<div class="mdl-directive mdl-directive--header" data-mdl-kind="header" data-src-line="0" data-src-line-end="1" data-slot-left="<em>MDLeaf User Guide</em>" data-slot-center="" data-slot-right="Chapter 2"><span class="mdl-directive-pill">Header: *MDLeaf User Guide* · Chapter 2</span></div>
+<div class="mdl-directive mdl-directive--footer" data-mdl-kind="footer" data-src-line="1" data-src-line-end="2" data-slot-left="" data-slot-center="Page {page} of {pages}" data-slot-right=""><span class="mdl-directive-pill">Footer: Page {page} of {pages}</span></div>
+<p data-src-line="3" data-src-line-end="4">Text.</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 11-header-escapes.md 1`] = `
+"<article class="mdl-document">
+<div class="mdl-directive mdl-directive--header" data-mdl-kind="header" data-src-line="0" data-src-line-end="1" data-slot-left="a | b" data-slot-center="" data-slot-right="c ] d"><span class="mdl-directive-pill">Header: a | b · c ] d</span></div>
+<p data-src-line="2" data-src-line-end="3">Text.</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 12-header-too-many.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="2" data-src-line-end="3">Text.</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 13-header-clear.md 1`] = `
+"<article class="mdl-document">
+<div class="mdl-directive mdl-directive--header" data-mdl-kind="header" data-src-line="0" data-src-line-end="1" data-slot-left="" data-slot-center="Something" data-slot-right=""><span class="mdl-directive-pill">Header: Something</span></div>
+<p data-src-line="2" data-src-line-end="3">Page one</p>
+<div class="mdl-pagebreak" data-src-line="4" data-src-line-end="5" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<div class="mdl-directive mdl-directive--header" data-mdl-kind="header" data-src-line="5" data-src-line-end="6" data-slot-left="" data-slot-center="" data-slot-right=""><span class="mdl-directive-pill">Header: (cleared from here)</span></div>
+<p data-src-line="7" data-src-line-end="8">Page two</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 14-placeholder-unknown.md 1`] = `
+"<article class="mdl-document">
+<div class="mdl-directive mdl-directive--footer" data-mdl-kind="footer" data-src-line="0" data-src-line-end="1" data-slot-left="" data-slot-center="Page {page} of {total}" data-slot-right=""><span class="mdl-directive-pill">Footer: Page {page} of {total}</span></div>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 15-hide-both.md 1`] = `
+"<article class="mdl-document">
+<div class="mdl-pagebreak" data-src-line="0" data-src-line-end="1" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<div class="mdl-directive mdl-directive--hide" data-mdl-kind="hide" data-hide-header="true" data-hide-footer="true" data-src-line="1" data-src-line-end="2"><span class="mdl-directive-pill">Hide header &amp; footer on this page</span></div>
+<h1 id="section-title" data-src-line="3" data-src-line-end="4">Section title</h1>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 16-hide-header.md 1`] = `
+"<article class="mdl-document">
+<div class="mdl-directive mdl-directive--hide" data-mdl-kind="hide" data-hide-header="true" data-src-line="0" data-src-line-end="1"><span class="mdl-directive-pill">Hide header on this page</span></div>
+<p data-src-line="2" data-src-line-end="3">Text</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 17-hide-footer.md 1`] = `
+"<article class="mdl-document">
+<div class="mdl-directive mdl-directive--hide" data-mdl-kind="hide" data-hide-footer="true" data-src-line="0" data-src-line-end="1"><span class="mdl-directive-pill">Hide footer on this page</span></div>
+<p data-src-line="2" data-src-line-end="3">Text</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 18-pagenumber-start.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1">Cover</p>
+<div class="mdl-pagebreak" data-src-line="2" data-src-line-end="3" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<nav class="mdl-toc" data-src-line="4" data-src-line-end="5"><div class="mdl-toc-title" role="heading" aria-level="2">Contents</div><ol class="mdl-toc-list"><li class="mdl-toc-item mdl-toc-item--level-1"><a class="mdl-toc-link" href="#chapter-1"><span class="mdl-toc-text">Chapter 1</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="chapter-1"></span></a></li></ol></nav>
+<div class="mdl-pagebreak" data-src-line="6" data-src-line-end="7" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<div class="mdl-directive mdl-directive--pagenumber" data-mdl-kind="pagenumber" data-start="1" data-src-line="7" data-src-line-end="8"><span class="mdl-directive-pill">Page numbering restarts at 1</span></div>
+<h1 id="chapter-1" data-src-line="9" data-src-line-end="10">Chapter 1</h1>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 19-pagenumber-offset.md 1`] = `
+"<article class="mdl-document">
+<div class="mdl-directive mdl-directive--pagenumber" data-mdl-kind="pagenumber" data-offset="-2" data-src-line="0" data-src-line-end="1"><span class="mdl-directive-pill">Page numbering offset by -2</span></div>
+<p data-src-line="2" data-src-line-end="3">Text</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 20-pagenumber-invalid.md 1`] = `
+"<article class="mdl-document">
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 21-unknown-directive.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1">::bogus</p>
+<p data-src-line="2" data-src-line-end="3">::bogus[label]{a=1}</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 22-misplaced-indented.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1">Para</p>
+<p data-src-line="2" data-src-line-end="3">::pagebreak</p>
+<pre data-src-line="4" data-src-line-end="5"><code>::toc
+</code></pre>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 23-misplaced-list.md 1`] = `
+"<article class="mdl-document">
+<ul data-src-line="0" data-src-line-end="4">
+<li data-src-line="0">item
+::pagebreak</li>
+<li data-src-line="2">::toc</li>
+</ul>
+<ol data-src-line="4" data-src-line-end="6">
+<li data-src-line="4">one
+::hide</li>
+</ol>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 24-misplaced-quote.md 1`] = `
+"<article class="mdl-document">
+<blockquote data-src-line="0" data-src-line-end="2">
+<p>quote
+::pagebreak</p>
+</blockquote>
+<blockquote data-src-line="3" data-src-line-end="4">
+<p>::toc</p>
+</blockquote>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 25-directive-in-code.md 1`] = `
+"<article class="mdl-document">
+<pre data-src-line="0" data-src-line-end="4"><code>::pagebreak
+::toc
+</code></pre>
+<pre data-src-line="5" data-src-line-end="6"><code>::pagebreak
+</code></pre>
+<pre data-src-line="7" data-src-line-end="10"><code class="language-md">::header[x]
+</code></pre>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 26-escaped-directive.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1">::pagebreak</p>
+<p data-src-line="2" data-src-line-end="3">Text ::toc here</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 27-directive-interrupts-paragraph.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1">First line</p>
+<div class="mdl-pagebreak" data-src-line="1" data-src-line-end="2" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<p data-src-line="2" data-src-line-end="3">Second paragraph</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 28-directive-after-quote.md 1`] = `
+"<article class="mdl-document">
+<blockquote data-src-line="0" data-src-line-end="1">
+<p>quoted</p>
+</blockquote>
+<div class="mdl-pagebreak" data-src-line="1" data-src-line-end="2" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<p data-src-line="2" data-src-line-end="3">after</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 29-directive-after-list.md 1`] = `
+"<article class="mdl-document">
+<ul data-src-line="0" data-src-line-end="2">
+<li data-src-line="0">a</li>
+<li data-src-line="1">b</li>
+</ul>
+<div class="mdl-pagebreak" data-src-line="2" data-src-line-end="3" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<ul data-src-line="3" data-src-line-end="4">
+<li data-src-line="3">c</li>
+</ul>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 30-directive-after-table.md 1`] = `
+"<article class="mdl-document">
+<table data-src-line="0" data-src-line-end="3">
+<thead>
+<tr data-src-line="0">
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody>
+<tr data-src-line="2">
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<div class="mdl-pagebreak" data-src-line="3" data-src-line-end="4" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 31-directive-trailing-space.md 1`] = `
+"<article class="mdl-document">
+<div class="mdl-pagebreak" data-src-line="0" data-src-line-end="1" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<nav class="mdl-toc" data-src-line="1" data-src-line-end="2"><div class="mdl-toc-title" role="heading" aria-level="2">Contents</div><ol class="mdl-toc-list"></ol></nav>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 32-images-basic.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1"><img class="mdl-img" src="blob:test/assets/fig.png" alt="Alt" data-src-path="assets/fig.png"></p>
+<p data-src-line="2" data-src-line-end="3"><img class="mdl-img" src="blob:test/assets/sub/b.jpg" alt="" title="Title" data-src-path="assets/sub/b.jpg"></p>
+<p data-src-line="4" data-src-line-end="5"><img class="mdl-img" src="https://example.com/x.png" alt="Remote"></p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 33-image-attrs.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="3"><img class="mdl-img" src="blob:test/assets/a.png" alt="a" data-src-path="assets/a.png" style="width:60%">
+<img class="mdl-img" src="blob:test/assets/b.png" alt="b" data-src-path="assets/b.png" style="height:20mm">
+<img class="mdl-img" src="blob:test/assets/c.png" alt="c" data-src-path="assets/c.png" style="width:300px" data-align="center"></p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 34-image-attrs-invalid.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1"><img class="mdl-img" src="blob:test/assets/a.png" alt="a" data-src-path="assets/a.png"></p>
+<p data-src-line="2" data-src-line-end="3"><img class="mdl-img" src="blob:test/assets/b.png" alt="b" data-src-path="assets/b.png"></p>
+<p data-src-line="4" data-src-line-end="5"><img class="mdl-img" src="blob:test/assets/c.png" alt="c" data-src-path="assets/c.png"></p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 35-image-attrs-not-closed.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1"><img class="mdl-img" src="blob:test/assets/a.png" alt="a" data-src-path="assets/a.png">{width=10px</p>
+<p data-src-line="2" data-src-line-end="3"><img class="mdl-img" src="blob:test/assets/b.png" alt="b" data-src-path="assets/b.png"> {width=10px}</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 36-image-attrs-reference.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1"><img class="mdl-img" src="blob:test/assets/r.png" alt="ref" data-src-path="assets/r.png"> {width=10px}</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 37-links.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1"><a href="https://example.com">inline</a> and <a href="blob:test/assets/spec.png" data-src-path="assets/spec.png">asset</a> and <a href="#title">anchor</a></p>
+<p data-src-line="2" data-src-line-end="3"><a href="https://auto.example.com">https://auto.example.com</a></p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 38-angle-urls.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1"><img class="mdl-img" src="blob:test/assets/my fig.png" alt="" data-src-path="assets/my fig.png"></p>
+<p data-src-line="2" data-src-line-end="3"><a href="blob:test/assets/a b.png" data-src-path="assets/a b.png">x</a></p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 39-encoded-urls.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1"><img class="mdl-img" src="blob:test/assets/my figure.png" alt="" data-src-path="assets/my figure.png"></p>
+<p data-src-line="2" data-src-line-end="3"><img class="mdl-img" src="blob:test/assets/x.png" alt="" data-src-path="assets/x.png"></p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 40-reference-links.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1"><a href="blob:test/assets/a.png" data-src-path="assets/a.png">one</a> <a href="https://example.com">two</a></p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 41-math.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1">Inline <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span> and <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span></span></span></span></span> here.</p>
+<div class="mdl-math" data-src-line="2" data-src-line-end="5"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.7936em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1076em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">b</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div>
+<div class="mdl-math" data-src-line="6" data-src-line-end="7"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.044em;">z</span></span></span></span></span></div>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 42-math-invalid.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1">Bad <span class="katex-error" title="ParseError: KaTeX parse error: Unexpected end of input in a macro argument, expected '}' at end of input: \\frac{a" style="color:#cc0000">\\frac{a</span> here.</p>
+<div class="mdl-math" data-src-line="2" data-src-line-end="5"><span class="katex-error" title="ParseError: KaTeX parse error: Expected '}', got 'EOF' at end of input: \\bad{" style="color:#cc0000">\\bad{
+</span></div>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 43-math-not-math.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1">Costs $5 and $10.</p>
+<p data-src-line="2" data-src-line-end="3">A <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span> c</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 44-footnotes.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1">Text with a note<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> and another<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>.</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>The note. <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>Second with <img class="mdl-img" src="blob:test/assets/fn.png" alt="i" data-src-path="assets/fn.png">. <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 45-raw-html.md 1`] = `
+"<article class="mdl-document">
+<div>
+
+</div>
+<p data-src-line="4" data-src-line-end="5">Inline  and <b>bold</b>.</p>
+
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 46-tables.md 1`] = `
+"<article class="mdl-document">
+<table data-src-line="0" data-src-line-end="3">
+<thead>
+<tr data-src-line="0">
+<th>Col 1</th>
+<th style="text-align:center">Col 2</th>
+</tr>
+</thead>
+<tbody>
+<tr data-src-line="2">
+<td><img class="mdl-img" src="blob:test/assets/t.png" alt="t" data-src-path="assets/t.png"></td>
+<td style="text-align:center"><a href="blob:test/assets/l.png" data-src-path="assets/l.png">l</a></td>
+</tr>
+</tbody>
+</table>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 47-tasks-strike.md 1`] = `
+"<article class="mdl-document">
+<ul class="contains-task-list" data-src-line="0" data-src-line-end="3">
+<li class="task-list-item" data-src-line="0"><label><input class="task-list-item-checkbox" disabled=""> open</label></li>
+<li class="task-list-item" data-src-line="1"><label><input class="task-list-item-checkbox" checked="" disabled=""> done</label></li>
+</ul>
+<p data-src-line="3" data-src-line-end="4"><s>gone</s> text</p>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 48-headings-dup.md 1`] = `
+"<article class="mdl-document">
+<h1 id="same" data-src-line="0" data-src-line-end="1">Same</h1>
+<nav class="mdl-toc" data-src-line="2" data-src-line-end="3"><div class="mdl-toc-title" role="heading" aria-level="2">Contents</div><ol class="mdl-toc-list"><li class="mdl-toc-item mdl-toc-item--level-1"><a class="mdl-toc-link" href="#same"><span class="mdl-toc-text">Same</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="same"></span></a></li><li class="mdl-toc-item mdl-toc-item--level-2"><a class="mdl-toc-link" href="#same-1"><span class="mdl-toc-text">Same</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="same-1"></span></a></li><li class="mdl-toc-item mdl-toc-item--level-2"><a class="mdl-toc-link" href="#same-2"><span class="mdl-toc-text">Same</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="same-2"></span></a></li></ol></nav>
+<h2 id="same-1" data-src-line="4" data-src-line-end="5">Same</h2>
+<h2 id="same-2" data-src-line="6" data-src-line-end="7">Same</h2>
+<blockquote data-src-line="8" data-src-line-end="9">
+<h2 id="quoted">Quoted</h2>
+</blockquote>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 49-mixed-document.md 1`] = `
+"<article class="mdl-document">
+<h1 id="report" data-src-line="0" data-src-line-end="1">Report</h1>
+<div class="mdl-directive mdl-directive--header" data-mdl-kind="header" data-src-line="2" data-src-line-end="3" data-slot-left="Report" data-slot-center="" data-slot-right="{page}/{pages}"><span class="mdl-directive-pill">Header: Report · {page}/{pages}</span></div>
+<nav class="mdl-toc" data-src-line="3" data-src-line-end="4"><div class="mdl-toc-title" role="heading" aria-level="2">Contents</div><ol class="mdl-toc-list"><li class="mdl-toc-item mdl-toc-item--level-1"><a class="mdl-toc-link" href="#report"><span class="mdl-toc-text">Report</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="report"></span></a></li><li class="mdl-toc-item mdl-toc-item--level-2"><a class="mdl-toc-link" href="#intro"><span class="mdl-toc-text">Intro</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="intro"></span></a></li><li class="mdl-toc-item mdl-toc-item--level-2"><a class="mdl-toc-link" href="#end"><span class="mdl-toc-text">End</span><span class="mdl-toc-leader" aria-hidden="true"></span><span class="mdl-toc-page" data-target="end"></span></a></li></ol></nav>
+<div class="mdl-pagebreak" data-src-line="5" data-src-line-end="6" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<div class="mdl-directive mdl-directive--pagenumber" data-mdl-kind="pagenumber" data-start="1" data-src-line="6" data-src-line-end="7"><span class="mdl-directive-pill">Page numbering restarts at 1</span></div>
+<h2 id="intro" data-src-line="8" data-src-line-end="9">Intro</h2>
+<p data-src-line="10" data-src-line-end="11">See <img class="mdl-img" src="blob:test/assets/fig.png" alt="fig" data-src-path="assets/fig.png" style="width:50%" data-align="right"> and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord mathnormal">m</span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>.</p>
+<table data-src-line="12" data-src-line-end="15">
+<thead>
+<tr data-src-line="12">
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody>
+<tr data-src-line="14">
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<div class="mdl-pagebreak" data-src-line="16" data-src-line-end="17" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<div class="mdl-directive mdl-directive--hide" data-mdl-kind="hide" data-hide-header="true" data-src-line="17" data-src-line-end="18"><span class="mdl-directive-pill">Hide header on this page</span></div>
+<h2 id="end" data-src-line="19" data-src-line-end="20">End<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></h2>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Fin. <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 50-setext-and-hr.md 1`] = `
+"<article class="mdl-document">
+<h1 data-src-line="0" data-src-line-end="2">Title</h1>
+<div class="mdl-pagebreak" data-src-line="3" data-src-line-end="4" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<hr data-src-line="5" data-src-line-end="6">
+<h2 id="sub" data-src-line="7" data-src-line-end="9">Sub</h2>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 51-directive-in-footnote.md 1`] = `
+"<article class="mdl-document">
+<p data-src-line="0" data-src-line-end="1">Text<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
+<div class="mdl-pagebreak" data-src-line="3" data-src-line-end="4" aria-hidden="true"><span class="mdl-pagebreak-label">Page break</span></div>
+<p data-src-line="5" data-src-line-end="6">After</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Note <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+</article>"
+`;
+
+exports[`sanitised HTML snapshots > 52-blockquote-lazy-image.md 1`] = `
+"<article class="mdl-document">
+<blockquote data-src-line="0" data-src-line-end="2">
+<p><img class="mdl-img" src="blob:test/assets/q.png" alt="q" data-src-path="assets/q.png" style="width:10px">
+lazy line</p>
+</blockquote>
+</article>"
+`;

@@ -1,0 +1,51 @@
+{
+  "name": "@mdleaf/core",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "**/*.css",
+    "./src/preview-runtime/styles.ts"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./lezer": "./src/lezer/index.ts",
+    "./preview-runtime": "./src/preview-runtime/index.ts",
+    "./preview-runtime/protocol": "./src/preview-runtime/protocol.ts",
+    "./css-contract": "./src/css-contract/contract.ts",
+    "./themes/base.css": "./src/themes/base.css",
+    "./themes/starter.css": "./src/themes/starter.css",
+    "./themes/presets/*.css": "./src/themes/presets/*.css",
+    "./themes/*.css": "./src/themes/*.css",
+    "./preview-runtime/styles": "./src/preview-runtime/styles.ts"
+  },
+  "scripts": {
+    "gen": "tsx scripts/gen-contract.ts"
+  },
+  "dependencies": {
+    "@codemirror/language": "6.13.1",
+    "@codemirror/language-data": "6.5.2",
+    "@fontsource-variable/inter": "5.3.0",
+    "@fontsource-variable/jetbrains-mono": "5.3.0",
+    "@fontsource-variable/source-serif-4": "5.3.1",
+    "@lezer/common": "^1.2.3",
+    "@lezer/highlight": "^1.2.1",
+    "@lezer/markdown": "^1.4.3",
+    "@vscode/markdown-it-katex": "1.1.2",
+    "dompurify": "3.4.17",
+    "fflate": "0.8.3",
+    "github-slugger": "2.0.0",
+    "katex": "0.16.47",
+    "markdown-it": "14.3.3",
+    "markdown-it-anchor": "9.2.1",
+    "markdown-it-footnote": "4.0.0",
+    "markdown-it-task-lists": "2.1.1",
+    "pagedjs": "0.4.3"
+  },
+  "devDependencies": {
+    "@codemirror/lang-markdown": "6.5.2",
+    "@codemirror/state": "^6.5.2",
+    "@types/markdown-it": "14.2.0",
+    "tsx": "4.23.15"
+  }
+}

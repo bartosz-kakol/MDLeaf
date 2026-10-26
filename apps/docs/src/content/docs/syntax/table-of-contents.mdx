@@ -1,0 +1,32 @@
+---
+title: Table of contents
+description: "::toc inserts a table of contents with page numbers."
+---
+
+import LiveExample from '../../../components/LiveExample.astro';
+
+```md
+::toc
+::toc{depth=2}
+::toc{depth=2 title="Inhalt"}
+::toc{title=""}
+```
+
+| Attribute | Values | Default | Meaning |
+| --- | --- | --- | --- |
+| `depth` | `1`–`6` | `3` | Include headings of this level and above |
+| `title` | quoted text | `"Contents"` | The title above the list; `title=""` shows no title |
+
+<LiveExample name="table-of-contents" />
+
+## How it works
+
+- Every heading of the document up to `depth` is listed, in order — including headings above the table. Headings inside quotes, lists and footnotes are not listed.
+- Each entry shows the heading text, a dotted leader and the **displayed page number** (after any [numbering changes](/syntax/page-numbering/)). In draft view the numbers are empty; they are filled in by page view.
+- Each entry is a link to its heading, in the preview and in the PDF.
+- The title is not a heading, so the table never lists itself. You can use `::toc` more than once; each shows the same list.
+
+## Common mistakes
+
+- `::toc{depth=7}` — depth must be 1 to 6: `directive-attr-invalid`, and no table is shown.
+- `::toc{title=Table of contents}` — values with spaces need quotes: `title="Table of contents"`.

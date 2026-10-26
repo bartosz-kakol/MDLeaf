@@ -1,0 +1,38 @@
+---
+title: Markdown
+description: The Markdown MDLeaf supports.
+---
+
+import Shortcut from '../../../components/Shortcut.astro';
+
+MDLeaf follows **CommonMark** and adds the GitHub extensions most people use.
+
+| Feature         | Syntax                                                                          |
+| --------------- | ------------------------------------------------------------------------------- |
+| Headings        | `# Title` … `###### Small` (or underlined with `===` / `---`)                   |
+| Emphasis        | `*italic*`, `**bold**`, `~~strikethrough~~`                                     |
+| Inline code     | `` `code` ``                                                                    |
+| Links           | `[text](https://example.com)`, `[text](#a-heading)`                             |
+| Images          | `![alt](assets/figure.png)` — see [image attributes](/syntax/image-attributes/) |
+| Lists           | `- item`, `1. item`, task lists `- [ ] todo` / `- [x] done`                     |
+| Quotes          | `> quoted text`                                                                 |
+| Code blocks     | fenced with three backticks, optionally with a language                         |
+| Tables          | GitHub pipe tables                                                              |
+| Horizontal rule | `---` on its own line, after a blank line                                       |
+| Autolinks       | bare `https://…` and `www.…` addresses become links                             |
+
+## Headings and links to them
+
+Every heading gets an id made from its text: lower case, spaces become `-`, punctuation is dropped, and repeated headings get `-1`, `-2`, … So `## Results and Discussion` can be linked with `[see results](#results-and-discussion)`. Use **Insert → Link to heading…** (<Shortcut command="insert.headingLink" />) to pick a heading from a list.
+
+## Code
+
+Code blocks are shown in a monospace font on a shaded background. Name the language after the opening fence (` ```js `, ` ```python `, ` ```sh `, ` ```diff ` …) and the code is coloured in the editor, the preview and the PDF, using the same grammars everywhere. A fence with no language, or one MDLeaf does not know, stays plain. Long lines wrap so that nothing is cut off in the PDF.
+
+Themes choose the colours with the `--mdl-code-*` properties of the [CSS contract](/styling/css-contract/), for example `--mdl-code-keyword` and `--mdl-code-string`.
+
+## Raw HTML
+
+You may write HTML, but it is cleaned for safety before it reaches the preview: `<script>`, `<style>`, `<iframe>`, `<object>`, `<embed>`, `<form>` and `<link>` are removed, as are event handlers and `javascript:` links. The editor warns about removed tags. Inline `<svg>` is removed too; reference SVG files as images instead.
+
+Task-list checkboxes are read-only in the preview — tick them in the source.

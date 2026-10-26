@@ -1,0 +1,31 @@
+---
+title: Palette and rebinding
+description: Find any command and change any shortcut.
+---
+
+import Keycaps from '../../../components/Keycaps.astro';
+import Shortcut from '../../../components/Shortcut.astro';
+
+## Command palette
+
+Open it with <Shortcut command="app.palette" /> or <kbd>F1</kbd>. It lists every command with its category and shortcuts, recently used commands first. Type to filter, <kbd>Enter</kbd> to run, <kbd>Esc</kbd> to close.
+
+**Open document…** (<Shortcut command="doc.open" />) uses the same list to switch documents. **Go to line…** (<Shortcut command="nav.gotoLine" />) jumps to a line.
+
+## Changing shortcuts
+
+_Settings → Keyboard_ lists all commands, with a search field and a category filter.
+
+- **+ Add** records a new shortcut: press the keys. <kbd>Esc</kbd> cancels.
+- **×** removes a shortcut. A command may have none.
+- **Reset** restores a command's defaults; **Reset all shortcuts** restores all.
+
+Rules:
+
+- A shortcut needs a modifier (<kbd>⌘</kbd>, <kbd>⌃</kbd> or <kbd>⌥</kbd> on macOS; <kbd>Ctrl</kbd> or <kbd>Alt</kbd> on Windows / Linux), except F1–F12 and keys for the asset tree.
+- Shortcuts the browser or operating system reserve, such as <Shortcut keys="$mod+w" /> everywhere or <Keycaps binding="$mod+q" platform="mac" /> on macOS, are refused.
+- If another command already uses the shortcut, MDLeaf shows _Already used by '…'_ with **Reassign** (move it) or **Cancel**. Shortcuts of the editor and of the asset tree do not conflict with each other.
+
+## International keyboards
+
+On Windows, the <kbd>AltGr</kbd> key is reported as <Keycaps binding="Control+Alt" platform="other" />. MDLeaf never takes over a Ctrl+Alt shortcut that types a character on your layout, so you can still type characters like `{`, `[`, `ą` or `ż`.

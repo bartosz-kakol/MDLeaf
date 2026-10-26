@@ -1,0 +1,82 @@
+---
+title: CSS contract
+description: The stable properties and classes themes are written against.
+---
+
+import Version from '../../../generated/contract-version.mdx';
+import Properties from '../../../generated/contract-properties.mdx';
+import Classes from '../../../generated/contract-classes.mdx';
+
+This page is generated from MDLeaf's source code, so it always matches the app. Contract version: **<Version />**.
+
+**Stability policy**: within a contract version, properties and classes are only ever added, never renamed or removed. A breaking change increases the version, and this page keeps a migration note.
+
+## Cascade
+
+Stylesheets apply in this order; later ones win at equal specificity:
+
+1. KaTeX's stylesheet
+2. The bundled fonts
+3. MDLeaf's base stylesheet: contract defaults and all structural rules
+4. **Your theme**
+5. The page geometry from the profile (`@page` size and margins, and the read-only layout properties)
+6. Preview chrome (screen only: page gaps, shadows, zoom)
+
+Because the profile comes after the theme, page size and margins always come from the profile. A theme may still style other `@page` properties.
+
+`html` has the class `mdl-mode-draft` or `mdl-mode-page`; when printing it is always page mode.
+
+## Custom properties
+
+Set these on `:root`. The defaults are those of the base stylesheet.
+
+<Properties />
+
+## Classes and structure
+
+<Classes />
+
+Themes may also use paged-media CSS: `break-before`, `break-after`, `break-inside`, `orphans`, `widows`, `@page :first` and `@page` margin boxes.
+
+## Structure of a page
+
+```html
+<div class="pagedjs_page mdl-page mdl-page--first" data-mdl-page="1">
+  …
+  <div class="pagedjs_pagebox">
+    <div class="pagedjs_area">
+      <article class="mdl-document">…your content…</article>
+    </div>
+    <div class="mdl-page-header">
+      <div class="mdl-slot mdl-slot--left">…</div>
+      <div class="mdl-slot mdl-slot--center">…</div>
+      <div class="mdl-slot mdl-slot--right">…</div>
+    </div>
+    <div class="mdl-page-footer">…same three slots…</div>
+  </div>
+</div>
+```
+
+## Structure of a table of contents
+
+```html
+<nav class="mdl-toc">
+  <div class="mdl-toc-title" role="heading" aria-level="2">Contents</div>
+  <ol class="mdl-toc-list">
+    <li class="mdl-toc-item mdl-toc-item--level-2">
+      <a class="mdl-toc-link" href="#results">
+        <span class="mdl-toc-text">Results</span>
+        <span class="mdl-toc-leader" aria-hidden="true"></span>
+        <span class="mdl-toc-page">7</span>
+      </a>
+    </li>
+  </ol>
+</nav>
+```
+
+## Offline-safe themes
+
+- In a file theme, embed fonts and images as `data:` URLs.
+- A URL theme caches only its own text; fonts it loads from elsewhere need a network.
+
+<a href="/downloads/mdleaf-starter.css" download>Download the starter stylesheet</a>

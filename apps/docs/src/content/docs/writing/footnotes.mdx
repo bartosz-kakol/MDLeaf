@@ -1,0 +1,23 @@
+---
+title: Footnotes
+description: Footnotes are collected as endnotes.
+---
+
+import LiveExample from '../../../components/LiveExample.astro';
+import Shortcut from '../../../components/Shortcut.astro';
+
+Write a footnote reference with `[^label]` and define it anywhere on its own line with `[^label]: text`. Labels can be numbers or words.
+
+```md
+Trees exchange water through their roots.[^1]
+
+[^1]: Observed in beech forests.
+```
+
+**Insert → Footnote** (<Shortcut command="insert.footnote" />) inserts the next free number and adds the definition at the end of the document for you.
+
+## Endnotes, not page footnotes
+
+MDLeaf renders footnotes as **endnotes**: a numbered list after a rule at the end of the document, with links back to the reference. They flow over pages like normal text. If the document has a table of contents, the notes section is not listed in it.
+
+<LiveExample name="math-and-footnotes" />

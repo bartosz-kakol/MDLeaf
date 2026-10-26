@@ -1,0 +1,25 @@
+---
+// Hosts @mdleaf/core/preview-runtime for LiveExample iframes, exactly like
+// apps/web/preview.html: the same runtime, KaTeX CSS and bundled fonts.
+---
+
+<!doctype html>
+<html lang="en" class="mdl-mode-draft">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Rendered example</title>
+  </head>
+  <body>
+    <main id="mdl-root"></main>
+    <div id="mdl-pages"></div>
+    <script>
+      import '@mdleaf/core/preview-runtime/styles';
+      import { startPreviewRuntime } from '@mdleaf/core/preview-runtime';
+      import { runExample } from '../components/exampleFrame.ts';
+
+      void runExample(startPreviewRuntime);
+    </script>
+  </body>
+</html>

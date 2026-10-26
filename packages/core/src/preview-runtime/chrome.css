@@ -1,0 +1,57 @@
+/* Preview chrome: screen-only presentation around the rendered document. */
+@media screen {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    background: #f3f4f6;
+    min-height: 100vh;
+  }
+  html.mdl-mode-draft body {
+    padding: 24px 16px 48px;
+    box-sizing: border-box;
+  }
+  html.mdl-mode-draft #mdl-root {
+    width: var(--mdl-content-width);
+    margin: 0 auto;
+    padding: 40px 48px;
+    background: var(--mdl-color-page-bg, #fff);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    box-sizing: content-box;
+  }
+  html.mdl-mode-draft #mdl-pages,
+  html.mdl-mode-page #mdl-root {
+    display: none;
+  }
+  html.mdl-mode-page #mdl-pages {
+    position: relative;
+    padding: 24px 0;
+    overflow: hidden;
+  }
+  html.mdl-mode-page .pagedjs_pages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    transform-origin: top center;
+    width: 100%;
+  }
+  html.mdl-mode-page .pagedjs_page {
+    margin: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    flex: none;
+  }
+}
+@media print {
+  #mdl-root {
+    display: none;
+  }
+  #mdl-pages {
+    /* biome-ignore lint/complexity/noImportantStyles: overrides the inline zoom sizing when printing */
+    height: auto !important;
+    /* biome-ignore lint/complexity/noImportantStyles: see above */
+    padding: 0 !important;
+  }
+}

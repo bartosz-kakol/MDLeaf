@@ -1,0 +1,29 @@
+---
+title: Hiding headers
+description: "::hide hides the header or footer on one page."
+---
+
+import LiveExample from '../../../components/LiveExample.astro';
+
+```md
+::hide
+::hide{header}
+::hide{footer}
+```
+
+| Flag | Meaning |
+| --- | --- |
+| `header` | Hide the header on this page |
+| `footer` | Hide the footer on this page |
+| *(none)* | Hide both |
+
+`::hide` affects only **the page that contains it**. It does not change page numbers or `{pages}`. Use it right after a `::pagebreak`, for a chapter title page for example.
+
+For the very first page there is no need for a directive: the profile settings **Hide header on first page** and **Hide footer on first page** do the same.
+
+<LiveExample name="cover-page" />
+
+## Common mistakes
+
+- `::hide{both}` — `both` is not a flag (`directive-attr-unknown`); write `::hide`.
+- A `::hide` far from a page break may land on the previous page. Put it directly after `::pagebreak`.

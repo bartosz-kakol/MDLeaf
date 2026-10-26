@@ -1,0 +1,12 @@
+/* MDLeaf preset: Classic — word-processor style serif. */
+:root {
+  --mdl-font-body: "Source Serif 4 Variable", Georgia, serif;
+  --mdl-font-heading: var(--mdl-font-body);
+  --mdl-font-size: 11pt;
+  --mdl-line-height: 1.45;
+  --mdl-heading-weight: 700;
+  --mdl-color-accent: #1a4d8f;
+  --mdl-color-border: #c9ced4;
+  --mdl-table-border: 1px solid #c9ced4;
+  --mdl-code-bg: #f2f3f5;
+}

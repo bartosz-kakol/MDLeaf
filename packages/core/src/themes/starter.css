@@ -1,0 +1,137 @@
+/*
+ * MDLeaf starter stylesheet — CSS contract v1
+ * Reference: https://mdleaf-docs.pages.dev/styling/css-contract/
+ *
+ * Rules:
+ *  1. Set the custom properties below on :root. Remove the ones you do not change.
+ *  2. Do not set the read-only layout properties (--mdl-page-width, --mdl-page-height, --mdl-margin-top, --mdl-margin-right, --mdl-margin-bottom, --mdl-margin-left, --mdl-content-width, --mdl-content-height);
+ *     MDLeaf sets them from the profile. Page size and margins always come from the profile.
+ *  3. For a theme that works offline as an uploaded file, embed fonts and images as data: URLs.
+ */
+
+:root {
+  /* Fonts */
+  --mdl-font-body:            "Source Serif 4 Variable", Georgia, serif; /* Body text family */
+  --mdl-font-heading:         var(--mdl-font-body); /* Heading family */
+  --mdl-font-mono:            "JetBrains Mono Variable", ui-monospace, monospace; /* Code family */
+  --mdl-font-size:            11pt; /* Base body size */
+  --mdl-line-height:          1.45; /* Body line height */
+
+  /* Colours */
+  --mdl-color-text:           #1b1b1b; /* Body text */
+  --mdl-color-muted:          #5f6368; /* Secondary text (captions, TOC leaders) */
+  --mdl-color-accent:         #1a4d8f; /* Links and accents */
+  --mdl-color-border:         #d0d4d9; /* Rules and borders */
+  --mdl-color-page-bg:        #ffffff; /* Page background */
+
+  /* Headings */
+  --mdl-heading-color:        var(--mdl-color-text); /* Heading colour */
+  --mdl-heading-weight:       700; /* Heading weight */
+  --mdl-h1-size:              2em; /* Heading 1 size */
+  --mdl-h2-size:              1.6em; /* Heading 2 size */
+  --mdl-h3-size:              1.3em; /* Heading 3 size */
+  --mdl-h4-size:              1.1em; /* Heading 4 size */
+  --mdl-h5-size:              1em; /* Heading 5 size */
+  --mdl-h6-size:              0.9em; /* Heading 6 size */
+  --mdl-heading-space-before: 1.2em; /* Space above headings */
+  --mdl-heading-space-after:  0.5em; /* Space below headings */
+
+  /* Blocks */
+  --mdl-paragraph-spacing:    0.6em; /* Space between paragraphs */
+  --mdl-blockquote-border:    3px solid var(--mdl-color-border); /* Quote rule */
+  --mdl-blockquote-color:     var(--mdl-color-muted); /* Quote text */
+
+  /* Code */
+  --mdl-code-font-size:       0.9em; /* Inline and block code size */
+  --mdl-code-bg:              #f4f5f7; /* Code background */
+  --mdl-code-color:           var(--mdl-color-text); /* Code text */
+  --mdl-code-radius:          3px; /* Corner radius */
+  --mdl-code-padding:         0.75em 1em; /* Code block padding */
+  --mdl-code-keyword:         #cf222e; /* Highlighted keywords */
+  --mdl-code-string:          #0a3069; /* Strings, regular expressions, URLs */
+  --mdl-code-comment:         var(--mdl-color-muted); /* Comments */
+  --mdl-code-number:          #0550ae; /* Numbers, booleans, null and other constants */
+  --mdl-code-name:            #8250df; /* Function and macro names */
+  --mdl-code-type:            #953800; /* Types, classes, namespaces, HTML tags */
+  --mdl-code-property:        #0550ae; /* Properties, keys and attributes */
+  --mdl-code-meta:            #6639ba; /* Annotations, decorators, preprocessor lines */
+  --mdl-code-inserted:        #116329; /* Added lines (diff) */
+  --mdl-code-deleted:         #82071e; /* Removed lines (diff) */
+
+  /* Tables */
+  --mdl-table-font-size:      0.95em; /* Table text */
+  --mdl-table-border:         1px solid var(--mdl-color-border); /* Cell borders */
+  --mdl-table-cell-padding:   0.35em 0.6em; /* Cell padding */
+  --mdl-table-header-bg:      transparent; /* Header row background */
+  --mdl-table-stripe-bg:      transparent; /* Even-row background */
+
+  /* Running */
+  --mdl-running-font:         var(--mdl-font-body); /* Header/footer family */
+  --mdl-running-font-size:    9pt; /* Header/footer size */
+  --mdl-running-color:        var(--mdl-color-muted); /* Header/footer colour */
+
+  /* TOC */
+  --mdl-toc-leader:           "."; /* Leader character ("" = none) */
+  --mdl-toc-indent:           1.2em; /* Indent per level */
+  --mdl-toc-title-size:       var(--mdl-h2-size); /* TOC title size */
+
+  /* Draft */
+  --mdl-draft-marker-color:   #9aa0a6; /* Page-break and directive pill colour (draft only) */
+}
+
+/*
+ * Structural classes you can style (uncomment and edit the examples below):
+ *
+ * html.mdl-mode-draft / html.mdl-mode-page — Current preview mode (draft, page)
+ * .mdl-document — Root <article> of rendered content (draft, page)
+ * .mdl-page — One page (alias class added to .pagedjs_page) (page)
+ * .mdl-page--first — Physical page 1 (page)
+ * .mdl-page--no-header, .mdl-page--no-footer — Header/footer hidden on that page (page)
+ * [data-mdl-page] — Displayed page number on .mdl-page (page)
+ * .mdl-page-header, .mdl-page-footer — Running header/footer containers (page)
+ * .mdl-slot, .mdl-slot--left, .mdl-slot--center, .mdl-slot--right — Header/footer slots (page)
+ * .mdl-pagebreak, .mdl-pagebreak-label — Page-break marker (label visible in draft only) (draft, page)
+ * .mdl-directive, .mdl-directive--header, --footer, --hide, --pagenumber, .mdl-directive-pill — Directive markers (pill visible in draft only) (draft, page)
+ * .mdl-toc, .mdl-toc-title, .mdl-toc-list, .mdl-toc-item, .mdl-toc-item--level-1 … --level-6, .mdl-toc-link, .mdl-toc-text, .mdl-toc-leader, .mdl-toc-page — Table of contents (draft, page)
+ * .mdl-img, .mdl-img[data-align], .mdl-img-block, .mdl-img-missing — Images (draft, page)
+ * .mdl-math, .katex, .katex-display — Math (draft, page)
+ * .mdl-keep, .mdl-keep--heading, .mdl-force-break — Keep-together wrappers (themes may add break-* rules to them) (page)
+ * section.footnotes, sup.footnote-ref, a.footnote-backref — Footnotes (from markdown-it-footnote) (draft, page)
+ * ul.contains-task-list, li.task-list-item, input.task-list-item-checkbox — Task lists (draft, page)
+ * .mdl-tok-keyword, .mdl-tok-string, .mdl-tok-comment, .mdl-tok-number, .mdl-tok-name, .mdl-tok-type, .mdl-tok-property, .mdl-tok-meta, .mdl-tok-inserted, .mdl-tok-deleted, .mdl-tok-heading, .mdl-tok-strong, .mdl-tok-emphasis — Highlighted tokens inside fenced code with a known language (draft, page)
+ * h1–h6, p, a, ul, ol, blockquote, pre > code, code, table, thead, th, td, hr, img — Standard elements inside .mdl-document (draft, page)
+ */
+
+/* Headings
+.mdl-document h1 { letter-spacing: -0.01em; }
+.mdl-document h2 { border-bottom: 1px solid var(--mdl-color-border); padding-bottom: 0.2em; }
+*/
+
+/* Start every level-1 heading on a new page (page view and PDF)
+.mdl-document h1 { break-before: page; }
+*/
+
+/* Running headers and footers
+.mdl-page-header { border-bottom: 0.5pt solid var(--mdl-color-border); }
+.mdl-page-footer .mdl-slot--center { font-variant-numeric: tabular-nums; }
+.mdl-page--first .mdl-page-header { display: none; }
+*/
+
+/* Table of contents
+.mdl-toc-title { text-transform: uppercase; letter-spacing: 0.08em; }
+.mdl-toc-item--level-1 { font-weight: 600; margin-top: 0.5em; }
+.mdl-toc-page { color: var(--mdl-color-muted); }
+*/
+
+/* Images
+.mdl-img-block { margin: 1em 0; }
+.mdl-img[data-align="center"] { box-shadow: 0 1px 3px rgb(0 0 0 / 0.2); }
+*/
+
+/* Keep-together: never split blockquotes across pages
+.mdl-document blockquote { break-inside: avoid; }
+*/
+
+/* Pages
+.mdl-page { background: #fffdf8; }
+*/

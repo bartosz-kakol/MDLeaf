@@ -1,0 +1,55 @@
+---
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+const sources = import.meta.glob<string>('../examples/*/document.md', { query: '?raw', import: 'default', eager: true });
+const metas = import.meta.glob<{ caption: string; defaultMode: 'page' | 'draft'; height?: number; title: string }>('../examples/*/example.json', {
+  import: 'default',
+  eager: true,
+});
+const source = sources[`../examples/${name}/document.md`];
+const meta = metas[`../examples/${name}/example.json`];
+if (source === undefined || !meta) throw new Error(`Unknown example: ${name}`);
+const height = meta.height ?? 520;
+---
+
+<div class="live-example" data-live-example={name} data-mode={meta.defaultMode}>
+  <Code code={source} lang="md" title={`${name}/document.md`} wrap />
+  <div class="live-example__output">
+    <div class="live-example__bar">
+      <div class="live-example__toggle" role="group" aria-label="Preview mode">
+        <button type="button" data-mode="draft" aria-pressed={meta.defaultMode === 'draft' ? 'true' : 'false'}>Draft</button>
+        <button type="button" data-mode="page" aria-pressed={meta.defaultMode === 'page' ? 'true' : 'false'}>Page</button>
+      </div>
+      <span>{meta.caption}</span>
+    </div>
+    <iframe
+      src={`/preview-frame/?example=${name}&mode=${meta.defaultMode}`}
+      title="Rendered example"
+      loading="lazy"
+      style={`height: ${height}px`}></iframe>
+    <div class="live-example__download">
+      <a href={`/samples/${name}.mdl`} download={`${name}.mdl`}>Download sample (.mdl)</a>
+      <p class="live-example__note">
+        Open it in MDLeaf with Library → Import .mdl. If MDLeaf is installed, you can also open the file directly.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  for (const box of Array.from(document.querySelectorAll<HTMLElement>('[data-live-example]'))) {
+    const frame = box.querySelector('iframe')!;
+    for (const button of Array.from(box.querySelectorAll<HTMLButtonElement>('button[data-mode]'))) {
+      button.addEventListener('click', () => {
+        const mode = button.dataset.mode!;
+        for (const b of Array.from(box.querySelectorAll('button[data-mode]'))) b.setAttribute('aria-pressed', String(b === button));
+        frame.contentWindow?.postMessage({ type: 'mdleaf-docs-mode', mode }, location.origin);
+      });
+    }
+  }
+</script>

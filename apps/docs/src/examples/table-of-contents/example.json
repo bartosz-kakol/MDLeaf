@@ -1,0 +1,33 @@
+{
+  "title": "Table of contents",
+  "caption": "::toc lists the headings with the page they appear on. Entries are links, in the preview and in the PDF.",
+  "defaultMode": "page",
+  "height": 560,
+  "profile": {
+    "schemaVersion": 1,
+    "id": "example-table-of-contents",
+    "name": "Example: table-of-contents",
+    "builtin": false,
+    "themeId": "preset:classic",
+    "layout": {
+      "size": {
+        "preset": "custom",
+        "widthMm": 148,
+        "heightMm": 210
+      },
+      "orientation": "portrait",
+      "marginsMm": {
+        "top": 16,
+        "right": 16,
+        "bottom": 18,
+        "left": 16
+      }
+    },
+    "headerFooter": {
+      "hideHeaderOnFirstPage": false,
+      "hideFooterOnFirstPage": false
+    },
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "updatedAt": "2026-01-01T00:00:00.000Z"
+  }
+}

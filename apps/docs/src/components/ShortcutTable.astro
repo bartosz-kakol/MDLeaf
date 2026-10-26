@@ -1,0 +1,40 @@
+---
+import { CATEGORY_ORDER, COMMANDS, type Platform } from '@mdleaf/core';
+import Keycaps from './Keycaps.astro';
+
+const rows = CATEGORY_ORDER.flatMap((category) => COMMANDS.filter((c) => c.category === category));
+const platforms: Platform[] = ['mac', 'other'];
+---
+
+<table class="shortcut-table">
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Command</th>
+      <th>macOS</th>
+      <th>Windows / Linux</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      rows.map((c) => (
+        <tr>
+          <td>{c.category}</td>
+          <td>{c.label}</td>
+          {platforms.map((platform) => (
+            <td>
+              {c.defaultKeys.length
+                ? c.defaultKeys.map((k, i) => (
+                    <>
+                      {i > 0 && ', '}
+                      <Keycaps binding={k} platform={platform} />
+                    </>
+                  ))
+                : '—'}
+            </td>
+          ))}
+        </tr>
+      ))
+    }
+  </tbody>
+</table>

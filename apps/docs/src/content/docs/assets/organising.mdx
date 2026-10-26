@@ -1,0 +1,38 @@
+---
+title: Organising assets
+description: The per-document asset tree.
+---
+
+import Shortcut from '../../../components/Shortcut.astro';
+
+Every document has its own `assets/` folder for images. The **Assets** panel on the left of the editor shows it as a tree. Toggle the panel with <Shortcut command="view.toggleAssets" />.
+
+Assets are images: PNG, JPEG, GIF, WebP, AVIF and SVG.
+
+## Working with the tree
+
+| Action                   | How                                                                      |
+| ------------------------ | ------------------------------------------------------------------------ |
+| Insert into the document | <kbd>Enter</kbd>, the context menu, or drag the file into the editor     |
+| Rename                   | <kbd>F2</kbd> — only the name is edited, the extension stays             |
+| Move                     | drag onto a folder, or <kbd>M</kbd> for _Move to…_                       |
+| Delete                   | <kbd>Delete</kbd> — asks first and tells you how often the image is used |
+| New folder, upload       | the buttons at the top of the panel, or a folder's context menu          |
+| Copy the Markdown path   | context menu → _Copy Markdown path_                                      |
+
+Hover a file for a larger preview with its dimensions.
+
+## References follow renames
+
+When you rename or move an image or a folder, MDLeaf rewrites the references in the document: inline images `![](…)`, inline links `[](…)` and reference definitions `[id]: …`. The toast says how many were updated. Rewrites are not part of undo, because undoing them would point at files that no longer exist.
+
+References written as raw HTML (`<img src="…">`) are **not** rewritten.
+
+## Broken and unused images
+
+- A reference to an image that does not exist is an error (`asset-missing`) in the gutter and the problems panel. Click it to jump to the reference. Paths outside `assets/` are reported as `asset-outside`.
+- Images that the document does not reference carry an **unused** badge. _Show unused only_ filters the tree; _Delete unused assets…_ removes them all after confirmation (folders are kept).
+
+## Paths
+
+Paths are relative to the document, like `assets/figures/chart.png`. MDLeaf writes paths with special characters percent-encoded (`my%20figure.png`) so they always work in Markdown.

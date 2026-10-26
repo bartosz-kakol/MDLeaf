@@ -1,0 +1,33 @@
+{
+  "title": "Image attributes",
+  "caption": "Width, height and alignment after an image. Without attributes, images shrink to the content width.",
+  "defaultMode": "draft",
+  "height": 620,
+  "profile": {
+    "schemaVersion": 1,
+    "id": "example-image-attributes",
+    "name": "Example: image-attributes",
+    "builtin": false,
+    "themeId": "preset:classic",
+    "layout": {
+      "size": {
+        "preset": "custom",
+        "widthMm": 148,
+        "heightMm": 210
+      },
+      "orientation": "portrait",
+      "marginsMm": {
+        "top": 16,
+        "right": 16,
+        "bottom": 18,
+        "left": 16
+      }
+    },
+    "headerFooter": {
+      "hideHeaderOnFirstPage": false,
+      "hideFooterOnFirstPage": false
+    },
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "updatedAt": "2026-01-01T00:00:00.000Z"
+  }
+}

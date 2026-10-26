@@ -1,0 +1,20 @@
+/* MDLeaf preset: Modern — Inter, larger heading scale, green accent. */
+:root {
+  --mdl-font-body: "Inter Variable", system-ui, sans-serif;
+  --mdl-font-heading: "Inter Variable", system-ui, sans-serif;
+  --mdl-font-size: 10.5pt;
+  --mdl-line-height: 1.5;
+  --mdl-color-text: #1d2125;
+  --mdl-color-accent: #1f6f50;
+  --mdl-heading-weight: 600;
+  --mdl-h1-size: 2.4em;
+  --mdl-h2-size: 1.8em;
+  --mdl-h3-size: 1.4em;
+  --mdl-h4-size: 1.15em;
+  --mdl-heading-color: #12352a;
+  --mdl-blockquote-border: 3px solid #1f6f50;
+  --mdl-table-header-bg: #e8f1ec;
+  --mdl-running-font: "Inter Variable", system-ui, sans-serif;
+  --mdl-running-font-size: 8.5pt;
+  --mdl-toc-leader: "·";
+}

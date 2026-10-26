@@ -1,0 +1,36 @@
+---
+title: Profiles
+description: Named page setups with per-document overrides.
+---
+
+import Shortcut from '../../../components/Shortcut.astro';
+
+A **profile** is a named page setup: page size, orientation, margins, theme, and whether the header and footer are hidden on the first page. Every document uses one profile, chosen in the top bar.
+
+## Built-in profiles
+
+| Profile          | Page                          | Margins | Theme   |
+| ---------------- | ----------------------------- | ------- | ------- |
+| Default (A4)     | A4, 210 × 297 mm, portrait    | 25 mm   | Classic |
+| Default (Letter) | Letter, 8.5 × 11 in, portrait | 1 in    | Classic |
+
+New documents use the default profile: Letter in the US, Canada and Mexico, A4 elsewhere. Change it in _Settings → General_. Built-in profiles cannot be changed; **Duplicate to edit** makes your own copy.
+
+## Your profiles
+
+_Settings → Profiles_ lists the profiles. Each has:
+
+- **Name** and **theme**.
+- **Page size**: A4, Letter or custom (50–1000 mm). Sizes are always entered as portrait; **orientation** turns the page.
+- **Margins** for each side, with _Link all sides_. The text area always stays at least 20 mm wide and tall.
+- **Hide header on first page** and **Hide footer on first page**.
+
+Values can be shown in millimetres or inches; they are stored in millimetres. Changes apply immediately to every document using the profile.
+
+Deleting a profile that documents use asks for a replacement profile.
+
+## Per-document overrides
+
+_Document settings_ (<Shortcut command="doc.settings" />) lets one document differ from its profile. Tick **Override** next to a field to change it for this document only; the others keep following the profile. **Save as new profile…** turns the current combination into a profile.
+
+The document's `.mdl` export contains its profile, so the page setup travels with it.

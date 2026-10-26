@@ -1,0 +1,43 @@
+---
+title: Your first document
+description: Create a document, use split view, switch between draft and page view, and export a PDF.
+---
+
+import Shortcut from '../../../components/Shortcut.astro';
+
+## Create a document
+
+In the Library choose **+ New document**, give it a title and pick a profile (the page size and theme). You land in the editor.
+
+The editor screen has the Markdown source on the left and the preview on the right. Your work is saved automatically half a second after you stop typing; the top bar shows _Saved_, _Saving…_ or _Unsaved changes_.
+
+## Draft and page view
+
+The preview has two modes. Toggle them with the **Draft | Page** buttons or <Shortcut command="view.toggleMode" />.
+
+- **Draft view** shows one continuous column with the width of your page's text area, so lines wrap exactly as on the page. Page breaks and other directives appear as small markers.
+- **Page view** lays the document out on real pages, with running headers and footers, page numbers and the table of contents filled in. It updates shortly after you stop typing.
+
+The preview follows the editor as you scroll. Turn this off with the scroll-follow button in the preview's toolbar.
+
+## Layouts
+
+Use **Editor | Split | Preview** (<Shortcut command="view.cycleLayout" /> cycles them) to focus on writing or reading.
+
+## Export a PDF
+
+Choose **Export PDF** (<Shortcut command="file.exportPdf" />). MDLeaf prepares the pages and opens the browser's print dialog.
+
+1. Set the destination to **Save as PDF**.
+2. Set **Margins** to **None** or **Default** — the pages already contain their margins.
+3. Turn off the browser's **Headers and footers** option.
+
+The PDF contains real, selectable text. Links stay clickable; links inside the document, like table-of-contents entries, are clickable in Chromium-based browsers and best-effort in Firefox and Safari.
+
+If the document has problems that may affect the PDF — missing images or blocks taller than a page — MDLeaf tells you before printing.
+
+## Next steps
+
+- Learn the [extended syntax](/syntax/directives/) for page breaks, headers and the table of contents.
+- Paste images straight into the editor: see [pasting images](/assets/pasting-images/).
+- Change page size and theme with [profiles](/styling/profiles/).

@@ -1,0 +1,19 @@
+---
+title: Math
+description: LaTeX math with KaTeX.
+---
+
+import LiveExample from '../../../components/LiveExample.astro';
+
+MDLeaf renders LaTeX math with [KaTeX](https://katex.org/).
+
+- **Inline math**: `$E = mc^2$`. The opening `$` must not be followed by a space and the closing `$` must not be followed by a digit, so prices such as `$5 and $10` stay text.
+- **Display math**: `$$` on its own line, the formula, and `$$` on its own line. A one-line `$$x^2$$` also works.
+
+<LiveExample name="math-and-footnotes" />
+
+## Limits
+
+KaTeX supports most of LaTeX math mode but not every package. Invalid math is shown as red error text and reported in the problems panel as `math-error` with KaTeX's message. Commands that would load external resources (`\href`, `\url`, `\includegraphics`) are not allowed.
+
+Display formulas are never split across pages. If one is taller than a page, MDLeaf warns about it.

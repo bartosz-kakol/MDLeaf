@@ -1,0 +1,43 @@
+---
+/**
+ * A keyboard shortcut shown for macOS and Windows / Linux as keycaps.
+ * `command` takes the default binding from the command catalog, so prose
+ * cannot drift from the app; `keys` is for shortcuts that are not commands.
+ */
+import { findCommand, formatBinding, parseBinding } from '@mdleaf/core';
+import Keycaps from './Keycaps.astro';
+
+interface Props {
+  /** Command id from the catalog, e.g. `view.toggleMode`. */
+  command?: string;
+  /** tinykeys binding, e.g. `$mod+v`. */
+  keys?: string;
+}
+
+const { command, keys } = Astro.props;
+let binding = keys;
+if (command) {
+  const spec = findCommand(command);
+  if (!spec) throw new Error(`<Shortcut>: unknown command "${command}"`);
+  binding = spec.defaultKeys[0];
+  if (!binding) throw new Error(`<Shortcut>: command "${command}" has no default shortcut`);
+}
+if (!binding || !parseBinding(binding)) throw new Error(`<Shortcut>: invalid binding "${binding}"`);
+const samePlatforms = formatBinding(binding, 'mac') === formatBinding(binding, 'other');
+---
+
+{
+  samePlatforms ? (
+    <span class="shortcut">
+      <Keycaps binding={binding} platform="other" />
+    </span>
+  ) : (
+    <span class="shortcut">
+      <span class="sr-only">macOS: </span>
+      <Keycaps binding={binding} platform="mac" />
+      <span class="shortcut__sep" aria-hidden="true">/</span>
+      <span class="sr-only">, Windows and Linux: </span>
+      <Keycaps binding={binding} platform="other" />
+    </span>
+  )
+}

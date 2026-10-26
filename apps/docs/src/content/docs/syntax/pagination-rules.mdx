@@ -1,0 +1,33 @@
+---
+title: Pagination rules
+description: How MDLeaf keeps headings, tables and figures together.
+---
+
+import LiveExample from '../../../components/LiveExample.astro';
+
+MDLeaf applies a few rules when it lays text out on pages, in page view and in the PDF.
+
+1. **No stranded headings.** A heading is never the last thing on a page. It moves to the next page together with the block after it. A run of headings (`##` followed by `###`) moves as a unit.
+2. **Atomic blocks stay whole if they fit.** Tables, code blocks, display math, aligned images, paragraphs of only images, and table-of-contents entries are not split when they fit on one page; if they do not fit in the space left, they start on the next page.
+3. **Oversized blocks are split.** A table or code block taller than a whole page is split (tables between rows, code between lines). Images cannot be split; they are cut off at the page bottom.
+
+<LiveExample name="keep-together" />
+
+## Oversized-block warnings
+
+In page view, each split atomic block and each image taller than the page gets a warning in the editor gutter and the problems panel: *This table is taller than one page and will be split across pages.* The warnings disappear in draft view.
+
+## Your own rules
+
+Themes can add standard CSS break rules; they are applied as far as the layout engine supports them:
+
+```css
+/* Every chapter on a new page */
+.mdl-document h1 { break-before: page; }
+/* Never split quotes */
+.mdl-document blockquote { break-inside: avoid; }
+/* Tables never directly after a page break */
+.mdl-keep { break-before: auto; }
+```
+
+`orphans` and `widows` (two lines by default) are best-effort. Only the three rules above are guaranteed. See the [CSS contract](/styling/css-contract/).

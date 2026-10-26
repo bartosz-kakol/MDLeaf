@@ -1,0 +1,36 @@
+---
+title: Page breaks
+description: "::pagebreak starts a new page."
+---
+
+import LiveExample from '../../../components/LiveExample.astro';
+import Shortcut from '../../../components/Shortcut.astro';
+
+```md
+::pagebreak
+```
+
+Starts a new page in page view and in the PDF. In draft view it shows as a dashed line labelled *Page break*. It takes no label and no attributes. Insert one with <Shortcut command="insert.pageBreak" />.
+
+<LiveExample name="page-breaks" />
+
+## Rules
+
+- **Consecutive breaks collapse.** Two `::pagebreak` lines in a row produce one break, not an empty page. A break at the very start or end of the document does nothing. A break that falls exactly where a page ends anyway does not add a page either.
+- **Blank pages on purpose**: put a paragraph containing only a non-breaking space between two breaks:
+
+  ```md
+  ::pagebreak
+
+  &nbsp;
+
+  ::pagebreak
+  ```
+
+- Directives that apply to a page, such as `::hide` or `::pagenumber`, belong right after the break: then they are guaranteed to land on the new page.
+
+## Common mistakes
+
+- `  ::pagebreak` (indented) or `- ::pagebreak` (in a list) is text: `directive-misplaced`.
+- `::page-break` is not a directive: `directive-unknown`.
+- `::pagebreak{now}`: attributes are ignored with `directive-attr-unknown`.

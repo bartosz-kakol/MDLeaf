@@ -1,0 +1,33 @@
+{
+  "title": "Cover page",
+  "caption": "A cover page without header and footer, a contents page, and numbering that restarts at 1 for the first chapter. {pages} counts the displayed numbers.",
+  "defaultMode": "page",
+  "height": 600,
+  "profile": {
+    "schemaVersion": 1,
+    "id": "example-cover-page",
+    "name": "Example: cover-page",
+    "builtin": false,
+    "themeId": "preset:classic",
+    "layout": {
+      "size": {
+        "preset": "custom",
+        "widthMm": 148,
+        "heightMm": 210
+      },
+      "orientation": "portrait",
+      "marginsMm": {
+        "top": 16,
+        "right": 16,
+        "bottom": 18,
+        "left": 16
+      }
+    },
+    "headerFooter": {
+      "hideHeaderOnFirstPage": true,
+      "hideFooterOnFirstPage": true
+    },
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "updatedAt": "2026-01-01T00:00:00.000Z"
+  }
+}

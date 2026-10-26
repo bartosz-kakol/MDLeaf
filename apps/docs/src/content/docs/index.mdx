@@ -1,0 +1,42 @@
+---
+title: MDLeaf
+description: Write long Markdown documents with real pages, running headers, a table of contents and PDF export — offline.
+template: splash
+hero:
+  tagline: Markdown on real pages. Running headers and footers, a table of contents with page numbers, keep-together rules and PDF export — in an offline web app.
+  actions:
+    - text: Your first document
+      link: /start/first-document/
+      icon: right-arrow
+    - text: Extended syntax
+      link: /syntax/directives/
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import LiveExample from '../../components/LiveExample.astro';
+
+## What MDLeaf is
+
+MDLeaf is an installable web app for writing Markdown that is laid out like a word-processor document. You type Markdown in a source editor; next to it a live preview shows either a continuous **draft view** or real **pages**. What you see in page view is what you get in the PDF.
+
+<CardGrid>
+  <Card title="Real pages" icon="document">
+    Page size, orientation and margins come from a profile. Page breaks, running headers and footers, and page numbering are written in the document with a few short directives.
+  </Card>
+  <Card title="Works offline" icon="laptop">
+    After the first visit everything runs without a network: editing, pagination, PDF export, image re-encoding and the built-in fonts.
+  </Card>
+  <Card title="Keyboard first" icon="seti:config">
+    Every command has a shortcut, shown on its button. The command palette finds everything, and every shortcut can be changed.
+  </Card>
+  <Card title="Portable files" icon="seti:zip">
+    Documents, images and their page setup travel together in a single `.mdl` file. In Chromium you can also keep a document in a normal folder on disk.
+  </Card>
+</CardGrid>
+
+## A taste of the extended syntax
+
+<LiveExample name="running-headers" />
+
+Continue with [installing MDLeaf](/start/install/) or jump to the [syntax cheat sheet](/reference/syntax-cheatsheet/).

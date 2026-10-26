@@ -1,0 +1,33 @@
+{
+  "title": "Keep together",
+  "caption": "Headings move with the next block, tables and code that fit stay on one page, and an oversized table is split between rows.",
+  "defaultMode": "page",
+  "height": 620,
+  "profile": {
+    "schemaVersion": 1,
+    "id": "example-keep-together",
+    "name": "Example: keep-together",
+    "builtin": false,
+    "themeId": "preset:classic",
+    "layout": {
+      "size": {
+        "preset": "custom",
+        "widthMm": 148,
+        "heightMm": 210
+      },
+      "orientation": "portrait",
+      "marginsMm": {
+        "top": 16,
+        "right": 16,
+        "bottom": 18,
+        "left": 16
+      }
+    },
+    "headerFooter": {
+      "hideHeaderOnFirstPage": false,
+      "hideFooterOnFirstPage": false
+    },
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "updatedAt": "2026-01-01T00:00:00.000Z"
+  }
+}

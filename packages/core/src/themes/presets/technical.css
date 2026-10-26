@@ -1,0 +1,31 @@
+/* MDLeaf preset: Technical — compact, monospace accents, striped tables. */
+:root {
+  --mdl-font-body: "Inter Variable", system-ui, sans-serif;
+  --mdl-font-heading: "Inter Variable", system-ui, sans-serif;
+  --mdl-font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+  --mdl-font-size: 10pt;
+  --mdl-line-height: 1.4;
+  --mdl-color-text: #1f2328;
+  --mdl-color-accent: #0b5cad;
+  --mdl-color-border: #c4cad1;
+  --mdl-heading-weight: 650;
+  --mdl-heading-space-before: 1em;
+  --mdl-heading-space-after: 0.4em;
+  --mdl-paragraph-spacing: 0.5em;
+  --mdl-code-bg: #f6f8fa;
+  --mdl-code-font-size: 0.88em;
+  --mdl-code-padding: 0.6em 0.8em;
+  --mdl-table-font-size: 0.9em;
+  --mdl-table-cell-padding: 0.25em 0.5em;
+  --mdl-table-header-bg: #eef1f4;
+  --mdl-table-stripe-bg: #f7f8fa;
+  --mdl-running-font: "JetBrains Mono Variable", ui-monospace, monospace;
+  --mdl-running-font-size: 8pt;
+}
+.mdl-document pre {
+  border: 1px solid var(--mdl-color-border);
+}
+.mdl-document thead th {
+  font-family: var(--mdl-font-mono);
+  font-size: 0.92em;
+}

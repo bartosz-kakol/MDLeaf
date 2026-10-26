@@ -1,0 +1,29 @@
+---
+title: Storage
+description: Where MDLeaf keeps your documents.
+---
+
+import Shortcut from '../../../components/Shortcut.astro';
+
+MDLeaf stores everything in your browser's **Origin Private File System**, a private storage area of the MDLeaf site on your device. Nothing is uploaded anywhere.
+
+Each document is a folder with its Markdown (`document.md`), its images (`assets/`) and a small `doc.json` with its title, profile and settings. Your profiles, themes and settings are stored next to them.
+
+## Saving
+
+There is no save button: MDLeaf saves half a second after you stop typing, and whenever you switch documents, hide the window or close it. <Shortcut command="file.save" /> saves immediately. If saving fails, MDLeaf retries and shows _Save failed — Retry_ in the top bar.
+
+## One window at a time
+
+A document can be edited in one window or tab at a time. Opening it a second time shows it read-only with _This document is open in another MDLeaf window. [Take over]_. Taking over saves the other window's work and moves editing to this one.
+
+## Space and persistence
+
+The Library footer shows how much space MDLeaf uses. MDLeaf asks the browser to keep its storage persistent so it is not cleared when the disk gets full; installing MDLeaf as an app makes this more likely to be granted. Check it in _Settings → About_.
+
+Browsers delete site storage when you clear browsing data for the site. Keep backups with **Export .mdl**, or [link documents to folders](/files/folders/) in Chromium.
+
+## Import and export single Markdown files
+
+- **Import .md** creates a document from each file. The title is the first `#` heading, or the file name. Images referenced from the file are not imported; their references show as missing.
+- **Export .md** saves only the Markdown. If the document has images, MDLeaf reminds you to use `.mdl` instead.

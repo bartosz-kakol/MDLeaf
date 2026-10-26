@@ -1,0 +1,119 @@
+:root {
+  --sl-color-accent-low: #12352a;
+  --sl-color-accent: #5cc49a;
+  --sl-color-accent-high: #c7f0dd;
+}
+:root[data-theme="light"] {
+  --sl-color-accent-low: #d6efe3;
+  --sl-color-accent: #1f6f50;
+  --sl-color-accent-high: #12352a;
+}
+
+.live-example {
+  margin-block: 1.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+@media (max-width: 64rem) {
+  .live-example {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.live-example__output {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.live-example__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: var(--sl-text-sm);
+}
+.live-example__toggle {
+  display: inline-flex;
+  flex: none;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.4rem;
+  overflow: hidden;
+}
+.live-example__toggle button {
+  border: 0;
+  background: transparent;
+  color: var(--sl-color-text);
+  /* Starlight's prose spacing gives every element after a sibling a top margin. */
+  margin: 0;
+  padding: 0.2rem 0.7rem;
+  font: inherit;
+  cursor: pointer;
+}
+.live-example__toggle button[aria-pressed="true"] {
+  background: var(--sl-color-accent-low);
+  color: var(--sl-color-accent-high);
+  font-weight: 600;
+}
+.live-example iframe {
+  width: 100%;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.4rem;
+  background: #f3f4f6;
+}
+.live-example__download {
+  font-size: var(--sl-text-sm);
+}
+.live-example__note {
+  color: var(--sl-color-gray-3);
+  font-size: var(--sl-text-xs);
+}
+.sl-markdown-content .live-example pre {
+  max-height: 520px;
+}
+
+/* Keycaps: every <kbd> in content is a key; a .keycaps wrapper holds a combination. */
+.sl-markdown-content kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 1.7em;
+  min-width: 1.7em;
+  margin: 0;
+  padding: 0 0.45em;
+  border: 1px solid var(--sl-color-gray-4);
+  border-bottom-width: 2px;
+  border-radius: 0.3rem;
+  background: var(--sl-color-gray-6);
+  color: var(--sl-color-white);
+  font-family: var(--sl-font-system);
+  font-size: 0.8em;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+.sl-markdown-content kbd.keycaps {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  height: auto;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 1em;
+}
+.keycaps__plus,
+.shortcut__sep {
+  color: var(--sl-color-gray-3);
+  font-size: 0.8em;
+}
+.shortcut {
+  white-space: nowrap;
+}
+.shortcut__sep {
+  margin-inline: 0.35em;
+}
+.sl-markdown-content .shortcut-table td {
+  vertical-align: middle;
+}

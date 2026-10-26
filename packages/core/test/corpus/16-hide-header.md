@@ -1,0 +1,3 @@
+::hide{header}
+
+Text

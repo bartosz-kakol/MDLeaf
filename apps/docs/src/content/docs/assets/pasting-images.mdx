@@ -1,0 +1,29 @@
+---
+title: Pasting images
+description: Paste or drop an image and choose where it goes.
+---
+
+import Shortcut from '../../../components/Shortcut.astro';
+
+Paste an image (<Shortcut keys="$mod+v" />) or drop image files onto the editor. MDLeaf opens the **Add image** dialog, stores the file in the document's assets and inserts the Markdown where you pasted or dropped.
+
+| Field     | Default                                                                                                  |
+| --------- | -------------------------------------------------------------------------------------------------------- |
+| File name | `pasted-YYYYMMDD-HHmmss` for screenshots, otherwise the original name. The extension follows the format. |
+| Location  | the folder you used last; **New folder…** creates one                                                    |
+| Alt text  | empty                                                                                                    |
+| Width     | empty; for example `60%`, `400px` or `80mm` — added as `{width=…}`                                       |
+
+The dialog shows the resulting path. If a file with that path exists, tick **Replace existing file** or change the name.
+
+When you paste several images, the dialog opens once per image (_Add image (2 of 3)_). Each one is inserted after the previous one; **Cancel all** stops.
+
+## Inserting images you already have
+
+**Insert → Image…** (<Shortcut command="insert.image" />) opens a picker with all the document's images. Type to filter, use the arrow keys, and press <kbd>Enter</kbd>. **Upload new…** adds images from disk through the same dialog.
+
+## Notes
+
+- Only images can be added. Other files are ignored with a message.
+- Dropping a `.md` or `.mdl` file onto the editor does nothing; import those in the Library.
+- In a window where the document is read-only, pasting images is disabled.

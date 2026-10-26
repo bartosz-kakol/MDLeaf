@@ -1,0 +1,37 @@
+{
+  "title": "Custom theme",
+  "caption": "A profile that uses a small file theme. The .mdl embeds theme.css, so the sample looks the same after import.",
+  "defaultMode": "page",
+  "height": 560,
+  "profile": {
+    "schemaVersion": 1,
+    "id": "example-custom-theme",
+    "name": "Example: custom-theme",
+    "builtin": false,
+    "themeId": "example-theme",
+    "layout": {
+      "size": {
+        "preset": "custom",
+        "widthMm": 148,
+        "heightMm": 210
+      },
+      "orientation": "portrait",
+      "marginsMm": {
+        "top": 16,
+        "right": 16,
+        "bottom": 18,
+        "left": 16
+      }
+    },
+    "headerFooter": {
+      "hideHeaderOnFirstPage": false,
+      "hideFooterOnFirstPage": false
+    },
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "updatedAt": "2026-01-01T00:00:00.000Z"
+  },
+  "theme": {
+    "name": "Teal example theme",
+    "file": "theme.css"
+  }
+}

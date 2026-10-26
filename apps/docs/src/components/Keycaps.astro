@@ -1,0 +1,14 @@
+---
+import { bindingKeyLabels, type Platform } from '@mdleaf/core';
+
+interface Props {
+  /** tinykeys syntax, e.g. `$mod+Shift+d`. */
+  binding: string;
+  platform: Platform;
+}
+
+const { binding, platform } = Astro.props;
+const labels = bindingKeyLabels(binding, platform);
+---
+
+<kbd class="keycaps" data-platform={platform}>{labels.map((label, i) => <>{i > 0 && platform === 'other' && <span class="keycaps__plus">+</span>}<kbd>{label}</kbd></>)}</kbd>

@@ -1,0 +1,60 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": {
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/.astro",
+      "!**/node_modules",
+      "!pnpm-lock.yaml",
+      "!**/test-results",
+      "!**/playwright-report",
+      "!**/__snapshots__",
+      "!**/*-snapshots",
+      "!apps/docs/src/generated",
+      "!apps/docs/public/samples",
+      "!apps/docs/public/examples-data",
+      "!packages/core/src/themes/base.css",
+      "!packages/core/src/themes/starter.css",
+      "!packages/core/test/corpus",
+      "!**/*.astro",
+      "!**/*.svg",
+      "!**/*.md",
+      "!**/*.mdx"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 140
+  },
+  "javascript": {
+    "formatter": { "quoteStyle": "single", "jsxQuoteStyle": "double", "trailingCommas": "all", "semicolons": "always" }
+  },
+  "css": {
+    "formatter": { "enabled": true },
+    "parser": { "cssModules": false, "tailwindDirectives": true }
+  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "style": {
+        "noNonNullAssertion": "off",
+        "noParameterAssign": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "warn"
+      },
+      "a11y": {
+        "noAutofocus": "off",
+        "useKeyWithClickEvents": "off",
+        "noStaticElementInteractions": "off",
+        "useSemanticElements": "off"
+      }
+    }
+  }
+}

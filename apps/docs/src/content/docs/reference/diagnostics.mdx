@@ -1,0 +1,34 @@
+---
+title: Diagnostics
+description: Every warning and error MDLeaf reports, and how to fix it.
+---
+
+import Diagnostics from '../../../generated/diagnostics.mdx';
+import Shortcut from '../../../components/Shortcut.astro';
+
+MDLeaf checks your document as you type. Problems appear as wavy underlines and gutter markers in the editor, and in the problems panel (<Shortcut command="view.toggleProblems" />). <Shortcut command="nav.nextProblem" /> and <Shortcut command="nav.prevProblem" /> jump between them.
+
+This table is generated from MDLeaf's source code.
+
+<Diagnostics />
+
+## Messages
+
+| Code | Message |
+| --- | --- |
+| `directive-unknown` | Unknown directive '::name'. |
+| `directive-misplaced` | Directives only work at the start of a top-level line. |
+| `directive-attr-unknown` | 'key' is not an attribute of ::name. |
+| `directive-attr-invalid` | Invalid value for 'key' in ::name: reason. The directive is ignored. |
+| `image-attr-unknown` | Image attribute 'key' is not supported (use width, height, align). |
+| `image-attr-invalid` | Invalid image key 'value'. |
+| `placeholder-unknown` | Unknown placeholder '&#123;name&#125;' (use &#123;page&#125; or &#123;pages&#125;). |
+| `html-disallowed` | &lt;tag&gt; is removed from the preview and PDF. |
+| `asset-missing` | Image not found: path. |
+| `asset-outside` | Images must be stored under assets/ (found path). |
+| `math-error` | Math error: KaTeX message. |
+| `block-oversized` | This table is taller than one page and will be split across pages. |
+
+`block-oversized` appears only in page view.
+
+Document-level problems — a missing profile or theme, a URL theme that could not be refreshed, invalid overrides, or linked-folder issues — are listed at the top of the problems panel.

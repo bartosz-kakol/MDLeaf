@@ -1,0 +1,31 @@
+---
+title: Custom themes
+description: Themes from a file or a URL.
+---
+
+import LiveExample from '../../../components/LiveExample.astro';
+
+A theme is a CSS stylesheet written against the [CSS contract](/styling/css-contract/). Add one in *Settings → Themes*, then select it in a profile.
+
+<LiveExample name="custom-theme" />
+
+## From a file
+
+**Add from file…** stores a copy of the CSS file (up to 2 MB) with your documents. **Replace file…** updates it.
+
+A file theme cannot use relative `url(…)` references, because there is no folder next to it. Embed fonts and images as `data:` URLs instead — then the theme works fully offline.
+
+## From a URL
+
+**Add from URL…** takes an `https://` address. MDLeaf downloads the stylesheet immediately; adding fails if it cannot be loaded.
+
+The server must allow cross-origin requests: it has to send `Access-Control-Allow-Origin: *` (or your MDLeaf origin). GitHub Pages, most CDNs and Cloudflare Pages do this for CSS files.
+
+### Online and offline
+
+- MDLeaf always renders with the copy it has, so the network never slows you down.
+- When you are online, it checks the URL for a newer version once per session and re-renders if the stylesheet changed. **Refresh now** checks immediately.
+- Offline, the last downloaded copy is used, and the problems panel says *Theme '…' could not be refreshed; using the copy from …*.
+- A URL theme that has never been downloaded cannot be used offline; MDLeaf renders with base styles and says so.
+
+Relative `url(…)` and `@import` references inside a URL theme are made absolute, so fonts and images load from the theme's server when online. They are not stored for offline use: offline, the browser falls back to the next font in your font stack.

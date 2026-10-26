@@ -1,0 +1,49 @@
+---
+title: Headers and footers
+description: Running headers and footers with slots and page numbers.
+---
+
+import LiveExample from '../../../components/LiveExample.astro';
+
+```md
+::header[Centre text]
+::header[Left|Right]
+::header[Left|Centre|Right]
+::footer[|Page {page} of {pages}|]
+::header[]
+```
+
+A definition applies from the page that contains it to every later page, until the next definition of the same kind. Before the first definition, pages have none.
+
+<LiveExample name="running-headers" />
+
+## Slots
+
+The label has up to three **slots** separated by `|`:
+
+| Label | Left | Centre | Right |
+| --- | --- | --- | --- |
+| `[Text]` | | Text | |
+| `[Left\|Right]` | Left | | Right |
+| `[A\|B\|C]` | A | B | C |
+| `[\|Page {page}\|]` | | Page 1 | |
+
+Slots accept inline Markdown — `*italic*`, `**bold**`, `` `code` ``, `~~struck~~`. Links and images show only their text. Write `\|` for a literal bar and `\]` for a bracket. The **Running header…** command builds the label from three fields for you.
+
+## Placeholders
+
+- `{page}` — the displayed number of the page.
+- `{pages}` — the displayed number of the **last** page. With `::pagenumber{start=1}` after a cover and a contents page, a five-page body reads *Page 1 of 5*.
+- `{{` and `}}` write literal braces.
+
+## Clearing
+
+`::header[]` or `::footer[]` with an empty label removes it from that page on.
+
+If a page contains several definitions of the same kind, the last one wins for that page.
+
+## Common mistakes
+
+- `::header[A|B|C|D]` — at most three slots: `directive-attr-invalid`.
+- `{total}` is not a placeholder: `placeholder-unknown`.
+- Headers live in the page margin. If your top margin is very small, the header is clipped; increase the margin in the [profile](/styling/profiles/).

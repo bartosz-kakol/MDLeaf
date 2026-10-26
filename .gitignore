@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.astro/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+.DS_Store
+apps/docs/public/samples/
+apps/docs/public/examples-data/
+apps/docs/public/downloads/
+apps/docs/src/generated/
+.vitest-attachments/

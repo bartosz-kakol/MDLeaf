@@ -1,0 +1,24 @@
+{
+  "name": "@mdleaf/docs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "gen": "tsx scripts/gen-reference.ts && tsx scripts/build-samples.ts",
+    "dev": "pnpm gen && astro dev",
+    "build": "tsx scripts/gen-reference.ts && tsx scripts/build-samples.ts && astro build",
+    "preview": "astro preview",
+    "check": "pnpm gen && astro check"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "0.37.7",
+    "@mdleaf/core": "workspace:*",
+    "astro": "5.18.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "starlight-links-validator": "0.19.2",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  }
+}

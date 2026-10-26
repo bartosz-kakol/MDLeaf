@@ -1,0 +1,56 @@
+---
+title: Directives
+description: The MDLeaf extended syntax — one line, two colons.
+---
+
+import LiveExample from '../../../components/LiveExample.astro';
+
+MDLeaf adds a handful of **directives** for pagination features. A directive is a single line:
+
+```md
+::name
+::name[label]
+::name{attrs}
+::name[label]{attrs}
+```
+
+| Directive | What it does | Page |
+| --- | --- | --- |
+| `::pagebreak` | Starts a new page | [Page breaks](/syntax/page-breaks/) |
+| `::toc` | Table of contents with page numbers | [Table of contents](/syntax/table-of-contents/) |
+| `::header[…]`, `::footer[…]` | Running header or footer from this page on | [Headers and footers](/syntax/headers-and-footers/) |
+| `::hide{…}` | Hides header and/or footer on one page | [Hiding headers](/syntax/hiding-headers/) |
+| `::pagenumber{…}` | Restarts or offsets the page numbers | [Page numbering](/syntax/page-numbering/) |
+
+<LiveExample name="cover-page" />
+
+## Grammar
+
+```text
+directive  = "::" name [ "[" label "]" ] [ "{" attrs "}" ] *WSP EOL
+name       = lowercase letter, then lowercase letters, digits or "-"
+label      = any text; write "\]" for "]" and "\|" for a literal "|"
+attrs      = zero or more attributes separated by spaces
+attr       = key "=" value / key            ; a bare key is a flag
+value      = text without spaces, or "a quoted value" (\" for a quote)
+```
+
+## Where directives work
+
+- At the **start of a line** (column 0), with nothing else on the line.
+- At the **top level** of the document: not inside a list, quote, table, code block or footnote.
+- A directive line may follow a paragraph directly; it always ends that paragraph.
+- To write the characters literally, escape them: `\::pagebreak` shows `::pagebreak`.
+
+The editor highlights directives in violet, their labels in a lighter violet and attributes in teal.
+
+## Common mistakes
+
+| Problem | Diagnostic |
+| --- | --- |
+| A misspelt name such as `::pagebrake` stays as text | `directive-unknown` (warning) |
+| An indented directive, or one inside a list or quote, stays as text | `directive-misplaced` (warning) |
+| An attribute the directive does not have is ignored | `directive-attr-unknown` (warning) |
+| An invalid value, such as `::toc{depth=9}`, ignores the whole directive | `directive-attr-invalid` (error) |
+
+See [all diagnostics](/reference/diagnostics/).

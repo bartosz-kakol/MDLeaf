@@ -1,0 +1,33 @@
+{
+  "title": "Page breaks",
+  "caption": "A page break starts a new page. Two breaks in a row produce only one; put a non-breaking space between them for a blank page.",
+  "defaultMode": "page",
+  "height": 560,
+  "profile": {
+    "schemaVersion": 1,
+    "id": "example-page-breaks",
+    "name": "Example: page-breaks",
+    "builtin": false,
+    "themeId": "preset:classic",
+    "layout": {
+      "size": {
+        "preset": "custom",
+        "widthMm": 148,
+        "heightMm": 210
+      },
+      "orientation": "portrait",
+      "marginsMm": {
+        "top": 16,
+        "right": 16,
+        "bottom": 18,
+        "left": 16
+      }
+    },
+    "headerFooter": {
+      "hideHeaderOnFirstPage": false,
+      "hideFooterOnFirstPage": false
+    },
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "updatedAt": "2026-01-01T00:00:00.000Z"
+  }
+}
