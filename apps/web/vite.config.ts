@@ -6,7 +6,7 @@ import { defineConfig, type Plugin } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 const APP_CSP =
-  "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https:; img-src 'self' blob: data: https:; font-src 'self' blob: data: https:; connect-src 'self' https:; frame-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'";
+  "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https:; img-src 'self' blob: data: https:; font-src 'self' blob: data: https:; connect-src 'self' https: ws://127.0.0.1:47821; frame-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'";
 const PREVIEW_CSP =
   "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https:; img-src 'self' blob: data: https:; font-src 'self' blob: data: https:; connect-src 'none'; base-uri 'none'; form-action 'none'";
 

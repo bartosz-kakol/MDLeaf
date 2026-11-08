@@ -26,6 +26,6 @@ my-report/
 ## Staying in sync
 
 - Every save, image change, rename and move is mirrored. The status bar shows _Synced_, _Syncing…_ or a problem.
-- When you open a document, MDLeaf checks the folder. If it was changed outside MDLeaf, choose **Load from folder** or **Keep MDLeaf version**.
+- MDLeaf checks the folder when you open a document and every few seconds while you edit. If it was changed outside MDLeaf, choose **Load from folder** or **Keep MDLeaf version**. Until you choose, nothing is written to the folder.
 - After a browser restart, the browser may ask for permission again: click **Reconnect** in the banner.
 - If the folder was moved or deleted, the banner offers **Link again…** or **Unlink**.

@@ -72,7 +72,8 @@ export async function useLegacyFilePickers(page: Page): Promise<void> {
 
 export async function openApp(page: Page): Promise<void> {
   await page.goto('/#/');
-  await page.waitForFunction(() => !!(window as unknown as { __mdleafTest?: unknown }).__mdleafTest);
+  // Tests may pre-populate __mdleafTest with mocks, so wait for a field the app itself installs.
+  await page.waitForFunction(() => !!(window as unknown as { __mdleafTest?: { createDocument?: unknown } }).__mdleafTest?.createDocument);
 }
 
 /** Creates a document through the test API and opens it in the editor. */

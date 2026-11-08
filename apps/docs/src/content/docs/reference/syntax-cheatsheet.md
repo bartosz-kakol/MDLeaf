@@ -36,6 +36,8 @@ Placeholders in headers and footers: `{page}`, `{pages}`; `{{` and `}}` for brac
 
 Units: `px` (default), `%`, `mm`, `cm`, `in`, `pt`.
 
+Keep images inside the `assets/` folder (subfolders are fine) and use relative paths. PNG, JPEG, GIF, WebP, AVIF and SVG files work.
+
 ## Math and footnotes
 
 | Syntax                      | Effect                         |

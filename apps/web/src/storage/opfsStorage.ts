@@ -99,6 +99,8 @@ const normalizeText = (s: string) => s.replace(/^﻿/, '').replace(/\r\n?/g, '\n
 export class OpfsStorage implements StorageApi {
   private rootDir: Dir | null = null;
   private queues = new Map<string, Promise<unknown>>();
+  /** Documents whose last write to their folder failed partway, so their newer files are our own. */
+  private partialMirrors = new Set<string>();
   private listener: ((e: StorageEvent) => void) | null = null;
   private readonly opts: Required<Omit<OpfsStorageOptions, 'broadcast'>> & Pick<OpfsStorageOptions, 'broadcast'>;
 
@@ -705,13 +707,20 @@ export class OpfsStorage implements StorageApi {
         this.emit({ type: 'diskStatus', status: { docId: id, state: 'permission-needed' } });
         return;
       }
-      this.emit({ type: 'diskStatus', status: { docId: id, state: 'syncing' } });
       try {
         const meta = await this.readMeta(id);
+        // Never write over a change made outside MDLeaf: the user chooses which version to keep first.
+        if (await this.changedOutside(id, dir, meta)) {
+          this.emit({ type: 'diskStatus', status: { docId: id, state: 'changed-on-disk' } });
+          return;
+        }
+        this.emit({ type: 'diskStatus', status: { docId: id, state: 'syncing' } });
         await op(dir, meta);
         const synced = await this.setSynced(id);
+        this.partialMirrors.delete(id);
         this.emit({ type: 'diskStatus', status: { docId: id, state: 'synced', lastSyncedAt: synced } });
       } catch (err) {
+        this.partialMirrors.add(id);
         const e = toStorageError(err, 'linked folder');
         const status: DiskStatus =
           e.code === 'NOT_FOUND'
@@ -874,30 +883,38 @@ export class OpfsStorage implements StorageApi {
     return linked;
   }
 
-  async checkDiskChanges(id: string): Promise<'in-sync' | 'disk-newer' | 'permission-needed' | 'missing'> {
-    const meta = await this.readMeta(id);
-    if (!meta.diskLink) return 'in-sync';
-    const dir = await this.opts.handles.get(id);
-    if (!dir) return 'missing';
-    if ((await this.permission(dir)) !== 'granted') return 'permission-needed';
-    const since = Date.parse(meta.diskLink.lastSyncedAt) + 1000;
-    try {
-      const newest = async (d: Dir, names: string[] | null): Promise<number> => {
-        let max = 0;
-        for await (const [name, h] of entries(d)) {
-          if (names && !names.includes(name)) continue;
-          if (h.kind === 'file') max = Math.max(max, (await (h as FileSystemFileHandle).getFile()).lastModified);
-          else if (!names || name === 'assets') max = Math.max(max, await newest(h as Dir, null));
-        }
-        return max;
-      };
-      const latest = await newest(dir, [meta.diskLink.markdownFile, 'doc.json', 'profile.json', 'theme.css', 'theme.json', 'assets']);
-      return latest > since ? 'disk-newer' : 'in-sync';
-    } catch (err) {
-      const e = toStorageError(err, 'linked folder');
-      if (e.code === 'PERMISSION') return 'permission-needed';
-      return 'missing';
-    }
+  /** Whether MDLeaf's files in the folder are newer than its last write to them. */
+  private async changedOutside(id: string, dir: Dir, meta: DocMeta): Promise<boolean> {
+    if (!meta.diskLink || this.partialMirrors.has(id)) return false;
+    const newest = async (d: Dir, names: string[] | null): Promise<number> => {
+      let max = 0;
+      for await (const [name, h] of entries(d)) {
+        if (names && !names.includes(name)) continue;
+        if (h.kind === 'file') max = Math.max(max, (await (h as FileSystemFileHandle).getFile()).lastModified);
+        else if (!names || name === 'assets') max = Math.max(max, await newest(h as Dir, null));
+      }
+      return max;
+    };
+    const latest = await newest(dir, [meta.diskLink.markdownFile, 'doc.json', 'profile.json', 'theme.css', 'theme.json', 'assets']);
+    return latest > Date.parse(meta.diskLink.lastSyncedAt) + 1000;
+  }
+
+  /** Runs in the mirror queue, so MDLeaf's own writes in progress are not mistaken for outside changes. */
+  checkDiskChanges(id: string): Promise<'in-sync' | 'disk-newer' | 'permission-needed' | 'missing'> {
+    return this.enqueue(`mirror:${id}`, async () => {
+      const meta = await this.readMeta(id);
+      if (!meta.diskLink) return 'in-sync';
+      const dir = await this.opts.handles.get(id);
+      if (!dir) return 'missing';
+      if ((await this.permission(dir)) !== 'granted') return 'permission-needed';
+      try {
+        return (await this.changedOutside(id, dir, meta)) ? 'disk-newer' : 'in-sync';
+      } catch (err) {
+        const e = toStorageError(err, 'linked folder');
+        if (e.code === 'PERMISSION') return 'permission-needed';
+        return 'missing';
+      }
+    });
   }
 
   async syncFromDisk(id: string): Promise<DocMeta> {
@@ -914,17 +931,22 @@ export class OpfsStorage implements StorageApi {
     const dir = await this.opts.handles.get(id);
     if (!meta.diskLink || !dir) throw new StorageError('NOT_FOUND', 'This document is not linked to a folder');
     if ((await this.permission(dir)) !== 'granted') throw new StorageError('PERMISSION', 'Reconnect to the folder first');
-    this.emit({ type: 'diskStatus', status: { docId: id, state: 'syncing' } });
-    try {
-      await this.writeWholeFolder(id, dir, meta.diskLink.markdownFile);
-    } catch (err) {
-      const e = toStorageError(err, 'linked folder');
-      this.emit({ type: 'diskStatus', status: { docId: id, state: 'failed', error: e.text } });
-      throw e;
-    }
-    const synced = await this.setSynced(id);
-    this.emit({ type: 'diskStatus', status: { docId: id, state: 'synced', lastSyncedAt: synced } });
-    return this.readMeta(id);
+    const markdownFile = meta.diskLink.markdownFile;
+    return this.enqueue(`mirror:${id}`, async () => {
+      this.emit({ type: 'diskStatus', status: { docId: id, state: 'syncing' } });
+      try {
+        await this.writeWholeFolder(id, dir, markdownFile);
+      } catch (err) {
+        this.partialMirrors.add(id);
+        const e = toStorageError(err, 'linked folder');
+        this.emit({ type: 'diskStatus', status: { docId: id, state: 'failed', error: e.text } });
+        throw e;
+      }
+      const synced = await this.setSynced(id);
+      this.partialMirrors.delete(id);
+      this.emit({ type: 'diskStatus', status: { docId: id, state: 'synced', lastSyncedAt: synced } });
+      return this.readMeta(id);
+    });
   }
 
   async unlinkFolder(id: string): Promise<DocMeta> {

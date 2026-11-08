@@ -9,6 +9,7 @@ import { InputError, type LoadedDocument, loadDocument } from './input.ts';
 import { lintDocument, outlineDocument, type Problem } from './lint.ts';
 import { runMcpServer } from './mcp.ts';
 import { syntaxReference } from './resources.ts';
+import { StatusReporter } from './status.ts';
 
 const HELP = `Usage: mdleaf <command> [options]
 
@@ -52,6 +53,10 @@ function defaultPdfName(doc: LoadedDocument): string {
   return `${stemOf(basename(doc.kind === 'mdl' ? doc.path : doc.markdownPath))}.pdf`;
 }
 
+const DOCUMENT_COMMANDS = ['lint', 'outline', 'paginate', 'pdf'] as const;
+type DocumentCommand = (typeof DOCUMENT_COMMANDS)[number];
+const isDocumentCommand = (c: string): c is DocumentCommand => (DOCUMENT_COMMANDS as readonly string[]).includes(c);
+
 async function run(argv: string[]): Promise<number> {
   const { values, positionals } = parseArgs({
     args: argv,
@@ -84,7 +89,7 @@ async function run(argv: string[]): Promise<number> {
     return 0;
   }
 
-  if (!['lint', 'outline', 'paginate', 'pdf'].includes(command)) {
+  if (!isDocumentCommand(command)) {
     process.stderr.write(`Unknown command: ${command}\n\n${HELP}`);
     return 2;
   }
@@ -93,6 +98,23 @@ async function run(argv: string[]): Promise<number> {
     return 2;
   }
 
+  const status = new StatusReporter('cli', { serve: command === 'paginate' || command === 'pdf' });
+  await status.start();
+  try {
+    return await status.track(command, path, () => runDocumentCommand(command, path, values));
+  } finally {
+    await status.stop();
+  }
+}
+
+interface DocumentOptions {
+  json: boolean;
+  profile?: string;
+  offline: boolean;
+  out?: string;
+}
+
+async function runDocumentCommand(command: DocumentCommand, path: string, values: DocumentOptions): Promise<number> {
   const doc = await loadDocument(path, { profileId: values.profile });
   for (const note of doc.notes) process.stderr.write(`note: ${note}\n`);
 

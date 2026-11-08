@@ -1,11 +1,13 @@
 import { defaultSettings } from '@mdleaf/core';
+import { runCommand } from '@/commands/registry.ts';
 import { setPreviewScrollFollow } from '@/services/session.ts';
-import { allProfiles, toast, useProfileStore, useSettingsStore } from '@/state/stores.ts';
+import { allProfiles, toast, useExternalActivityStore, useProfileStore, useSettingsStore } from '@/state/stores.ts';
 import { Button, Field, Input, Select, Switch } from '../ui.tsx';
 
 export function GeneralTab() {
   const settings = useSettingsStore((s) => s.settings);
   useProfileStore((s) => s.userProfiles);
+  const activity = useExternalActivityStore((s) => s.state);
   const update = useSettingsStore.getState().update;
   return (
     <div className="max-w-md">
@@ -63,6 +65,16 @@ export function GeneralTab() {
           setPreviewScrollFollow(v);
         }}
       />
+      <Switch
+        label="Show command-line and agent activity"
+        checked={settings.showExternalActivity}
+        onChange={() => void runCommand('app.toggleExternalActivity', 'button')}
+      />
+      <p className="text-[12px] text-fg-muted">
+        Shows in the status bar when the mdleaf command or an AI agent is working on this computer, and lists the folders agents are working
+        in so you can edit them here. Your browser may ask to allow access to apps on this device.
+        {activity === 'denied' ? ' Access is currently blocked: allow it in this site’s browser settings.' : ''}
+      </p>
       <div className="mt-4">
         <Button
           onClick={() => {

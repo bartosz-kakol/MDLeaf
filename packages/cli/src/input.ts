@@ -14,7 +14,9 @@ import {
   type ThemeRecord,
   unpackMdl,
   validateAssetPath,
+  WORKSPACE_FILE,
 } from '@mdleaf/core';
+import { readWorkspaceFile } from './workspace.ts';
 
 /** A document read from disk: a Markdown file, a linked folder or a `.mdl` archive. */
 export interface LoadedDocument {
@@ -120,9 +122,11 @@ function pickTheme(profile: EffectiveProfile, theme: { record: ThemeRecord | nul
 async function loadFolder(folder: string, markdownFile: string | undefined, opts: LoadOptions): Promise<LoadedDocument> {
   const names = await readdir(folder);
   const mdFiles = names.filter((n) => MARKDOWN_RE.test(n)).sort();
+  const workspace = names.includes(WORKSPACE_FILE) ? await readWorkspaceFile(folder) : null;
   let file = markdownFile;
   if (!file) {
-    if (mdFiles.includes('document.md')) file = 'document.md';
+    if (workspace) file = workspace.markdownFile;
+    else if (mdFiles.includes('document.md')) file = 'document.md';
     else if (mdFiles.length === 1) file = mdFiles[0];
     else if (mdFiles.length > 1) throw new InputError(`The folder has several Markdown files; pass one of: ${mdFiles.join(', ')}`);
     else throw new InputError('The folder has no Markdown file.');
@@ -134,7 +138,19 @@ async function loadFolder(folder: string, markdownFile: string | undefined, opts
   let doc: ArchivedDocMeta | null = null;
   let archivedProfile: Profile | null = null;
   let theme: { record: ThemeRecord | null; css: string } | null = null;
-  if (names.includes('doc.json')) {
+  if (workspace) {
+    const { title, profileId, overrides, createdAt, viewMode } = workspace;
+    doc = {
+      schemaVersion: 1,
+      id: '',
+      title,
+      createdAt,
+      updatedAt: createdAt,
+      profileId,
+      overrides,
+      ui: { viewMode, lastAssetFolder: 'assets' },
+    };
+  } else if (names.includes('doc.json')) {
     const raw = await readJson(join(folder, 'doc.json')).catch(() => null);
     if (raw && typeof raw === 'object') doc = raw as ArchivedDocMeta;
     else notes.push('doc.json is not valid JSON and was ignored.');
@@ -156,7 +172,7 @@ async function loadFolder(folder: string, markdownFile: string | undefined, opts
   const themeCss = pickTheme(profile, theme, notes);
   const title = (typeof doc?.title === 'string' && doc.title) || firstHeading(markdown) || basename(folder) || stemOf(file);
   return {
-    kind: names.includes('doc.json') ? 'folder' : 'markdown',
+    kind: workspace || names.includes('doc.json') ? 'folder' : 'markdown',
     path: markdownFile ? markdownPath : folder,
     markdownPath,
     markdown,

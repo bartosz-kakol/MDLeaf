@@ -27,11 +27,14 @@ describe('MCP server', () => {
   it('lists the tools and the syntax resource', async () => {
     const { tools } = await client.listTools();
     expect(tools.map((t) => t.name).sort()).toEqual([
+      'create_workspace',
       'document_outline',
       'export_pdf',
       'lint_document',
+      'lock_document',
       'paginate_document',
       'syntax_reference',
+      'unlock_document',
     ]);
     expect(tools.find((t) => t.name === 'lint_document')?.annotations?.readOnlyHint).toBe(true);
     const { resources } = await client.listResources();

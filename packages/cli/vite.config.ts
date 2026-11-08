@@ -32,6 +32,8 @@ function copyResources(): Plugin {
 // markdown-it plugins the same default-export interop as the web app.
 export default defineConfig({
   plugins: [copyResources()],
+  // ws optionally loads these native modules. Bundling replaces them with empty stubs, which it would then call.
+  define: { 'process.env.WS_NO_BUFFER_UTIL': '"1"', 'process.env.WS_NO_UTF_8_VALIDATE': '"1"' },
   ssr: { noExternal: true, external: ['playwright-core'] },
   build: {
     ssr: 'src/main.ts',

@@ -5,6 +5,7 @@ import { ImagePicker } from '@/components/assets/ImagePicker.tsx';
 import { MoveAssetDialog } from '@/components/assets/MoveAssetDialog.tsx';
 import { GotoLineDialog, PdfDialog } from '@/components/dialogs/EditorDialogs.tsx';
 import { PaneBoundary } from '@/components/ErrorBoundary.tsx';
+import { AgentLockNotice } from '@/components/editor/AgentLockNotice.tsx';
 import { Banners } from '@/components/editor/Banners.tsx';
 import { CommandBar } from '@/components/editor/CommandBar.tsx';
 import { EditorPane } from '@/components/editor/EditorPane.tsx';
@@ -134,6 +135,7 @@ export function EditorScreen({ docId }: { docId: string }) {
       <CommandBar />
       <Banners />
       <div className="relative flex min-h-0 flex-1">
+        <AgentLockNotice />
         {assetsOpen && !narrow ? (
           <>
             <aside

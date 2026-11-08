@@ -102,6 +102,10 @@ export const COMMANDS: readonly CommandSpec[] = [
   c('app.settings', 'Settings', 'App', ['$mod+Comma'], 'global', 'settings'),
   c('app.shortcuts', 'Keyboard shortcuts', 'App', ['$mod+Slash'], 'global', 'keyboard'),
   c('app.persistStorage', 'Request persistent storage', 'App', [], 'global', 'hard-drive'),
+  c('app.toggleExternalActivity', 'Show command-line and agent activity', 'App', [], 'global', 'terminal'),
+  c('app.allowExternalActivity', 'Allow command-line and agent status', 'App', [], 'global', 'terminal', false),
+  c('app.connectAgentWindow', 'Connect to the agent through a window', 'App', [], 'global', 'terminal', false),
+  c('agent.forceUnlock', 'Force unlock', 'Document', [], 'global', 'lock-open', false),
 ];
 
 export function findCommand(id: string): CommandSpec | undefined {

@@ -6,6 +6,7 @@ import {
   type DocMeta,
   defaultSettings,
   detectPlatform,
+  type ExternalSession,
   type Platform,
   type Profile,
   type RenderedMessage,
@@ -13,6 +14,7 @@ import {
   type ThemeRecord,
 } from '@mdleaf/core';
 import { create } from 'zustand';
+import { type LiveSnapshot, NO_SESSIONS, NO_WORKSPACES } from '@/services/liveLink.ts';
 import type { DiskStatus } from '@/storage/api.ts';
 
 /* ---------------- route ---------------- */
@@ -69,17 +71,17 @@ export const useDocStore = create<{
   docId: string | null;
   meta: DocMeta | null;
   saveStatus: SaveStatus;
-  readOnly: false | 'other-tab' | 'newer-schema';
+  readOnly: false | 'other-tab' | 'newer-schema' | 'agent-lock' | 'agent-gone';
   diskStatus: DiskStatus | null;
-  diskBanner: null | 'permission-needed' | 'missing';
+  diskBanner: null | 'permission-needed' | 'missing' | 'changed' | 'agent-changed';
   set(
     p: Partial<{
       docId: string | null;
       meta: DocMeta | null;
       saveStatus: SaveStatus;
-      readOnly: false | 'other-tab' | 'newer-schema';
+      readOnly: false | 'other-tab' | 'newer-schema' | 'agent-lock' | 'agent-gone';
       diskStatus: DiskStatus | null;
-      diskBanner: null | 'permission-needed' | 'missing';
+      diskBanner: null | 'permission-needed' | 'missing' | 'changed' | 'agent-changed';
     }>,
   ): void;
 }>((set) => ({
@@ -127,6 +129,24 @@ export const useViewStore = create<{
   cursor: { line: 1, col: 1 },
   online: typeof navigator !== 'undefined' ? navigator.onLine : true,
   set: (p) => set(p),
+}));
+
+/* ---------------- command-line and agent activity ---------------- */
+
+export const useExternalActivityStore = create<{
+  state: LiveSnapshot['state'];
+  connected: boolean;
+  via: LiveSnapshot['via'];
+  sessions: readonly ExternalSession[];
+  workspaces: LiveSnapshot['workspaces'];
+  set(snapshot: LiveSnapshot): void;
+}>((set) => ({
+  state: 'off',
+  connected: false,
+  via: null,
+  sessions: NO_SESSIONS,
+  workspaces: NO_WORKSPACES,
+  set: (snapshot) => set(snapshot),
 }));
 
 /* ---------------- profiles & themes ---------------- */

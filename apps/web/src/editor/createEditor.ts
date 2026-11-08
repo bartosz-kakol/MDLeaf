@@ -18,6 +18,7 @@ import {
   type ViewUpdate,
 } from '@codemirror/view';
 import { mdleafMarkdownExtensions } from '@mdleaf/core/lezer';
+import { agentEdits } from './agentEdits.ts';
 import { editorTheme, mdleafHighlightDark, mdleafHighlightLight } from './highlight.ts';
 import { mdleafLinter } from './lint.ts';
 import { type PasteDropOptions, pasteDropHandler } from './pasteDrop.ts';
@@ -61,6 +62,7 @@ export function editorExtensions(opts: EditorOptions): Extension[] {
     search({ top: true }),
     renderMarks,
     renderProblems,
+    agentEdits,
     mdleafLinter,
     pasteDropHandler(opts),
     readOnlyCompartment.of([EditorState.readOnly.of(opts.readOnly), EditorView.editable.of(true)]),

@@ -2,8 +2,9 @@ import { initDispatcher } from '@/commands/dispatcher.ts';
 import { registerAllCommands } from '@/commands/handlers.ts';
 import { setContextProvider } from '@/commands/registry.ts';
 import { initPwa } from '@/pwa/register.ts';
+import { initExternalActivity } from '@/services/externalActivity.ts';
 import { importFiles, openDocumentRoute } from '@/services/fileOps.ts';
-import { currentDocId, getView, initSessionChannel } from '@/services/session.ts';
+import { currentDocId, getView, initSessionChannel, noteDiskChanged } from '@/services/session.ts';
 import { installTestApi } from '@/services/testApi.ts';
 import { initThemeOnlineRefresh, loadThemeRecords } from '@/services/themeService.ts';
 import { parseHash, toast, useDocStore, useProfileStore, useRouteStore, useSettingsStore, useViewStore } from '@/state/stores.ts';
@@ -21,6 +22,7 @@ function onStorageEvent(e: StorageEvent): void {
     }
     if (e.status.state === 'permission-needed') useDocStore.getState().set({ diskBanner: 'permission-needed' });
     if (e.status.state === 'missing') useDocStore.getState().set({ diskBanner: 'missing' });
+    if (e.status.state === 'changed-on-disk') noteDiskChanged();
   }
 }
 
@@ -108,6 +110,7 @@ export async function bootstrap(): Promise<void> {
   initDispatcher();
   initSessionChannel();
   initThemeOnlineRefresh();
+  initExternalActivity();
   persistSettings();
   initRouting();
   await initialRoute();

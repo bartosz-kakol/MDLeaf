@@ -2,6 +2,8 @@ export * from './assets/analyze.ts';
 export * from './assets/paths.ts';
 export * from './assets/refs.ts';
 export * from './assets/rewrite.ts';
+export * from './bridge/live.ts';
+export * from './bridge/status.ts';
 export * from './commands/catalog.ts';
 export * from './css-contract/contract.ts';
 export * from './keybindings/index.ts';

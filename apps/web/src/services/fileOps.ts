@@ -22,7 +22,7 @@ import {
 declare global {
   interface Window {
     /** Test-only injection point (E2E tests). */
-    __mdleafTest?: { showDirectoryPicker?: (opts?: unknown) => Promise<FileSystemDirectoryHandle> };
+    __mdleafTest?: { showDirectoryPicker?: (opts?: unknown) => Promise<FileSystemDirectoryHandle>; livePort?: number };
     showDirectoryPicker?: (opts?: { mode?: 'read' | 'readwrite'; id?: string }) => Promise<FileSystemDirectoryHandle>;
   }
 }

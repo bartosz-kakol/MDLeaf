@@ -5,6 +5,7 @@ import { themeName } from '@/services/themeService.ts';
 import { toast, useDocStore, useProblemStore, useThemeStore, useViewStore } from '@/state/stores.ts';
 import { storage } from '@/storage/client.ts';
 import { parseStorageError } from '@/storage/errors.ts';
+import { ExternalActivityIndicator } from '../ExternalActivityIndicator.tsx';
 
 export function StatusBar() {
   const cursor = useViewStore((s) => s.cursor);
@@ -15,6 +16,7 @@ export function StatusBar() {
   const docProblems = useProblemStore((s) => s.docProblems);
   const meta = useDocStore((s) => s.meta);
   const disk = useDocStore((s) => s.diskStatus);
+  const changedOnDisk = useDocStore((s) => s.diskBanner === 'changed');
   useThemeStore((s) => s.records);
   const all = [...diagnostics, ...Object.values(docProblems)];
   const errors = all.filter((p) => p.severity === 'error').length;
@@ -23,15 +25,17 @@ export function StatusBar() {
 
   const diskLabel = !meta?.diskLink
     ? null
-    : !disk || disk.state === 'synced'
-      ? 'Synced'
-      : disk.state === 'syncing'
-        ? 'Syncing…'
-        : disk.state === 'permission-needed'
-          ? 'Reconnect needed'
-          : disk.state === 'missing'
-            ? 'Folder missing'
-            : 'Sync failed';
+    : changedOnDisk
+      ? 'Changed on disk'
+      : !disk || disk.state === 'synced' || disk.state === 'changed-on-disk'
+        ? 'Synced'
+        : disk.state === 'syncing'
+          ? 'Syncing…'
+          : disk.state === 'permission-needed'
+            ? 'Reconnect needed'
+            : disk.state === 'missing'
+              ? 'Folder missing'
+              : 'Sync failed';
 
   const onDisk = () => {
     if (disk?.state === 'failed') {
@@ -83,6 +87,7 @@ export function StatusBar() {
           <Link2 size={12} /> {diskLabel}
         </button>
       ) : null}
+      <ExternalActivityIndicator />
     </footer>
   );
 }

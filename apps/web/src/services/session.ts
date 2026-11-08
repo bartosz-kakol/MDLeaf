@@ -1,17 +1,22 @@
 import { syntaxTree } from '@codemirror/language';
-import type { EditorView, ViewUpdate } from '@codemirror/view';
+import { Transaction } from '@codemirror/state';
+import { EditorView, type ViewUpdate } from '@codemirror/view';
 import {
   BUILTIN_PROFILES,
   collectUrlRefs,
   type DocMeta,
   type EffectiveProfile,
+  isAgentDocId,
   isUnderAssets,
+  minimalChange,
   OUTSIDE,
   type RenderedMessage,
   resolveEffectiveProfile,
+  type WorkspaceInfo,
 } from '@mdleaf/core';
 import { dispatchForwardedKey } from '@/commands/dispatcher.ts';
 import { useCommandVersion } from '@/commands/registry.ts';
+import { markAgentEdit } from '@/editor/agentEdits.ts';
 import { setReadOnly } from '@/editor/createEditor.ts';
 import { mapRenderLine, markRender, type RenderProblem, refreshLint, renderMarks, setRenderProblems } from '@/editor/renderProblems.ts';
 import { PreviewHost, type RenderInput } from '@/preview/PreviewHost.ts';
@@ -20,6 +25,7 @@ import {
   toast,
   useAssetStore,
   useDocStore,
+  useExternalActivityStore,
   useProblemStore,
   useRenderStore,
   useRouteStore,
@@ -61,6 +67,11 @@ let lastAnchor: { line: number; fraction: number } | null = null;
 let renderGeneration = 0;
 /** Text of a detached editor whose last change may not be saved yet. */
 let detachedText: string | null = null;
+/** An agent's version of the document, waiting for the user to choose between it and their unsaved edits. */
+let agentText: string | null = null;
+let agentHighlight: ReturnType<typeof setTimeout> | null = null;
+/** Line for the preview to show once it has rendered an agent's edit. */
+let followLine: number | null = null;
 
 function currentText(): string | null {
   return view ? view.state.doc.toString() : detachedText;
@@ -147,7 +158,8 @@ function scheduleSave(): void {
 
 async function writeOnce(): Promise<void> {
   const text = currentText();
-  if (!dirty || text === null || !docId || isReadOnly()) return;
+  // While an agent's version waits for the user's choice, saving would overwrite it.
+  if (!dirty || text === null || !docId || isReadOnly() || agentText !== null) return;
   const id = docId;
   dirty = false;
   setSave({ state: 'saving' });
@@ -314,6 +326,7 @@ export async function openDocument(id: string): Promise<OpenResult | null> {
   docId = id;
   initialMarkdown = data.markdown;
   dirty = false;
+  agentText = null;
   retry = 0;
   lastAnchor = null;
   const newer = isNewerSchema(data.meta);
@@ -322,7 +335,7 @@ export async function openDocument(id: string): Promise<OpenResult | null> {
   useDocStore.getState().set({
     docId: id,
     meta: data.meta,
-    readOnly: newer ? 'newer-schema' : locked ? false : 'other-tab',
+    readOnly: newer ? 'newer-schema' : !locked ? 'other-tab' : agentLockOf(id) ? 'agent-lock' : false,
     saveStatus: { state: 'saved', at: data.meta.updatedAt },
     diskStatus: null,
     diskBanner: null,
@@ -341,6 +354,10 @@ export async function openDocument(id: string): Promise<OpenResult | null> {
   void refreshAssets();
   if (data.meta.diskLink) void checkDisk(id);
   return data;
+}
+
+function agentLockOf(id: string): boolean {
+  return isAgentDocId(id) && !!useExternalActivityStore.getState().workspaces.find((w) => w.id === id)?.lock;
 }
 
 export async function closeDocument(): Promise<void> {
@@ -391,13 +408,20 @@ export function initSessionChannel(): void {
   });
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') void flush();
+    else void pollDisk();
   });
+  window.addEventListener('focus', () => void pollDisk());
   window.addEventListener('pagehide', () => void flush());
+  setInterval(() => void pollDisk(), DISK_POLL_MS);
 }
 
 /* ------------------------------------------------------------------ */
 /* Linked folders                                                      */
 /* ------------------------------------------------------------------ */
+
+const DISK_POLL_MS = 4_000;
+let diskDialogOpen = false;
+let diskPolling = false;
 
 export async function checkDisk(id: string): Promise<void> {
   const result = await storage.checkDiskChanges(id).catch(() => 'missing' as const);
@@ -409,16 +433,53 @@ export async function checkDisk(id: string): Promise<void> {
     if (result === 'disk-newer') {
       const { confirmDialog } = await import('@/state/ui.ts');
       const name = useDocStore.getState().meta?.diskLink?.folderName ?? 'folder';
-      const choice = await confirmDialog({
-        title: 'Folder changed',
-        message: `The folder '${name}' was changed outside MDLeaf.`,
-        confirmLabel: 'Load from folder',
-        cancelLabel: 'Keep MDLeaf version',
-      });
-      if (choice === 'confirm') await reloadFromDisk();
-      else
-        await storage.syncToDisk(id).catch((err) => toast(`Could not write the folder: ${parseStorageError(err).text}`, { kind: 'error' }));
+      diskDialogOpen = true;
+      try {
+        const choice = await confirmDialog({
+          title: 'Folder changed',
+          message: `The folder '${name}' was changed outside MDLeaf.`,
+          confirmLabel: 'Load from folder',
+          cancelLabel: 'Keep MDLeaf version',
+        });
+        await resolveDiskChange(choice === 'confirm' ? 'load' : 'keep');
+      } finally {
+        diskDialogOpen = false;
+      }
     }
+  }
+}
+
+/** Shows the non-blocking notice; used while editing, where a dialog would interrupt typing. */
+export function noteDiskChanged(): void {
+  if (!diskDialogOpen) useDocStore.getState().set({ diskBanner: 'changed' });
+}
+
+async function pollDisk(): Promise<void> {
+  const id = docId;
+  const { meta, diskBanner } = useDocStore.getState();
+  // Any banner is already waiting for the user. A read-only window does not own the folder's mirror.
+  if (!id || !meta?.diskLink || diskBanner || diskDialogOpen || diskPolling || isReadOnly() || document.visibilityState === 'hidden')
+    return;
+  diskPolling = true;
+  try {
+    const result = await storage.checkDiskChanges(id).catch(() => null);
+    if (docId !== id) return;
+    if (result === 'disk-newer') noteDiskChanged();
+    else if (result === 'permission-needed' || result === 'missing') useDocStore.getState().set({ diskBanner: result });
+  } finally {
+    diskPolling = false;
+  }
+}
+
+export async function resolveDiskChange(choice: 'load' | 'keep'): Promise<void> {
+  const id = docId;
+  if (!id) return;
+  try {
+    if (choice === 'load') await reloadFromDisk();
+    else await storage.syncToDisk(id);
+    if (docId === id) useDocStore.getState().set({ diskBanner: null });
+  } catch (err) {
+    toast(`Could not ${choice === 'load' ? 'read' : 'write'} the folder: ${parseStorageError(err).text}`, { kind: 'error' });
   }
 }
 
@@ -435,6 +496,103 @@ export async function reloadFromDisk(): Promise<void> {
   dirty = false;
   setSave({ state: 'saved', at: meta.updatedAt });
   await refreshAssets();
+}
+
+/* ------------------------------------------------------------------ */
+/* Agent workspaces                                                    */
+/* ------------------------------------------------------------------ */
+
+const AGENT_HIGHLIGHT_MS = 1_800;
+
+/** An agent is about to lock the document: stops typing first, so nothing is left unsaved. */
+export async function flushForAgent(id: string): Promise<void> {
+  if (docId !== id || isReadOnly()) return;
+  // On the view only: the store's flag would make the save itself a no-op.
+  if (view) setReadOnly(view, true);
+  await flush().catch(() => undefined);
+  if (docId === id) useDocStore.getState().set({ readOnly: 'agent-lock' });
+}
+
+/** `info` is null when no agent runs in the open workspace any more, which also ends a lock. */
+export function applyAgentState(info: WorkspaceInfo | null): void {
+  const { readOnly } = useDocStore.getState();
+  if (!isAgentDocId(docId) || readOnly === 'other-tab' || readOnly === 'newer-schema') return;
+  const next = !info ? 'agent-gone' : info.lock ? 'agent-lock' : false;
+  if (next === readOnly) return;
+  useDocStore.getState().set({ readOnly: next });
+  if (readOnly === 'agent-gone') void refreshAgentDocument();
+}
+
+function showAgentChange(change: { from: number; to: number; insert: string }, follow: boolean): void {
+  if (!view) return;
+  const end = change.from + change.insert.length;
+  const line = view.state.toText(change.insert).lines + view.state.doc.lineAt(change.from).number - 1;
+  view.dispatch({
+    changes: change,
+    annotations: Transaction.addToHistory.of(false),
+    effects: [markAgentEdit.of({ from: change.from, to: end }), ...(follow ? [EditorView.scrollIntoView(end, { y: 'center' })] : [])],
+  });
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = null;
+  dirty = false;
+  if (follow) followLine = line;
+  if (agentHighlight) clearTimeout(agentHighlight);
+  agentHighlight = setTimeout(() => view?.dispatch({ effects: markAgentEdit.of(null) }), AGENT_HIGHLIGHT_MS);
+}
+
+/** A workspace's Markdown changed on disk. */
+export function applyAgentText(id: string, markdown: string): void {
+  if (docId !== id) return;
+  if (!view) {
+    detachedText = markdown;
+    initialMarkdown = markdown;
+    return;
+  }
+  const change = minimalChange(view.state.doc.toString(), markdown);
+  if (!change) return;
+  if (dirty && !isReadOnly()) {
+    agentText = markdown;
+    useDocStore.getState().set({ diskBanner: 'agent-changed' });
+    return;
+  }
+  showAgentChange(change, useDocStore.getState().readOnly === 'agent-lock');
+  setSave({ state: 'saved', at: new Date().toISOString() });
+}
+
+export function applyAgentMeta(id: string, meta: DocMeta): void {
+  if (docId !== id) return;
+  const current = useDocStore.getState().meta;
+  useDocStore.getState().set({ meta: { ...meta, ui: current?.ui ?? meta.ui } });
+  requestRender(true);
+}
+
+export async function refreshAgentDocument(): Promise<void> {
+  const id = docId;
+  if (!isAgentDocId(id)) return;
+  try {
+    const { meta, markdown } = await storage.readDocument(id);
+    if (docId !== id) return;
+    applyAgentMeta(id, meta);
+    applyAgentText(id, markdown);
+    await refreshAssets();
+  } catch {
+    /* the agent went away again; the state update says so */
+  }
+}
+
+export async function resolveAgentChange(choice: 'load' | 'keep'): Promise<void> {
+  const text = agentText;
+  agentText = null;
+  useDocStore.getState().set({ diskBanner: null });
+  if (choice === 'keep') {
+    dirty = true;
+    await saveNow();
+  } else if (view && text !== null) {
+    const change = minimalChange(view.state.doc.toString(), text);
+    if (change) showAgentChange(change, false);
+    dirty = false;
+    setSave({ state: 'saved', at: new Date().toISOString() });
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -545,6 +703,10 @@ export function requestRender(immediate = false): void {
 function handleRendered(msg: RenderedMessage): void {
   useRenderStore.getState().set(msg);
   if (msg.mode === 'page') useViewStore.getState().set({ pageCount: msg.pageCount });
+  if (followLine !== null) {
+    preview?.scroll(followLine, 0, true);
+    followLine = null;
+  }
   if (!view) return;
   const marks = view.state.field(renderMarks);
   const doc = view.state.doc;

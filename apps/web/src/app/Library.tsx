@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { runCommand } from '@/commands/registry.ts';
+import { AgentWorkspaces } from '@/components/AgentWorkspaces.tsx';
+import { ExternalActivityIndicator } from '@/components/ExternalActivityIndicator.tsx';
 import { formatBytes, relativeTime } from '@/components/format.ts';
 import { Button, cx, KeyLabel, Menu, MenuContent, MenuItem, MenuSeparator, Tooltip, useShortcut } from '@/components/ui.tsx';
 import { usePwaStore } from '@/pwa/register.ts';
@@ -226,6 +228,7 @@ export function Library() {
       </div>
 
       <main className={cx('min-h-0 flex-1 overflow-auto', dragOver && 'bg-accent-soft')}>
+        <AgentWorkspaces query={query} />
         {docs === null ? null : docs.length === 0 ? (
           <div className="mx-auto mt-24 max-w-sm rounded-lg border border-dashed border-border-strong p-8 text-center">
             <p className="text-[15px] font-medium">No documents yet.</p>
@@ -365,6 +368,7 @@ export function Library() {
           </Tooltip>
         ) : null}
         {offlineReady ? <span>· Offline ready ✓</span> : null}
+        <ExternalActivityIndicator />
         <span className="ml-auto">v{__APP_VERSION__}</span>
       </footer>
     </div>

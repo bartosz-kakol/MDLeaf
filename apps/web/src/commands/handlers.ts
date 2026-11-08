@@ -2,6 +2,7 @@ import { redo, undo } from '@codemirror/commands';
 import { openSearchPanel } from '@codemirror/search';
 import type { TransactionSpec } from '@codemirror/state';
 import type { EditorView } from '@codemirror/view';
+import { isAgentDocId } from '@mdleaf/core';
 import { editInTree } from '@/components/assets/AssetsPanel.tsx';
 import { focusRegion } from '@/components/regions.ts';
 import {
@@ -26,6 +27,7 @@ import {
   promptRename,
   uploadImages,
 } from '@/services/assetOps.ts';
+import { allowExternalActivity, connectAgentWindow, forceUnlock, toggleExternalActivity } from '@/services/externalActivity.ts';
 import { canLinkFolders, deleteDocumentWithConfirm, exportMd, exportMdl, exportPdf, linkFolder, unlinkFolder } from '@/services/fileOps.ts';
 import { requestPersistentStorage, usePersistenceStore } from '@/services/persistence.ts';
 import { flush, getPreview, getView, isReadOnly, setPreviewScrollFollow, setViewMode, storageErrorToast } from '@/services/session.ts';
@@ -255,7 +257,8 @@ export function registerAllCommands(): void {
   registerCommand({
     id: 'file.linkFolder',
     run: () => linkFolder(),
-    isEnabled: (ctx) => hasDoc(ctx) && canLinkFolders() && !useDocStore.getState().meta?.diskLink && !isReadOnly(),
+    isEnabled: (ctx) =>
+      hasDoc(ctx) && !isAgentDocId(ctx.docId) && canLinkFolders() && !useDocStore.getState().meta?.diskLink && !isReadOnly(),
     palette: canLinkFolders(),
   });
   registerCommand({
@@ -284,7 +287,8 @@ export function registerAllCommands(): void {
       const meta = useDocStore.getState().meta;
       if (ctx.docId && meta) await deleteDocumentWithConfirm(ctx.docId, meta.title);
     },
-    isEnabled: (ctx) => hasDoc(ctx) && !isReadOnly(),
+    // A workspace is deleted on disk, by removing its folder or .mdleaf.json.
+    isEnabled: (ctx) => hasDoc(ctx) && !isAgentDocId(ctx.docId) && !isReadOnly(),
   });
 
   /* ---------------- Assets ---------------- */
@@ -363,5 +367,25 @@ export function registerAllCommands(): void {
       location.reload();
     },
     isEnabled: () => usePersistenceStore.getState().persisted === false,
+  });
+  registerCommand({
+    id: 'app.toggleExternalActivity',
+    run: toggleExternalActivity,
+    isChecked: () => useSettingsStore.getState().settings.showExternalActivity,
+  });
+  registerCommand({
+    id: 'app.allowExternalActivity',
+    run: allowExternalActivity,
+    isEnabled: () => useSettingsStore.getState().settings.showExternalActivity,
+  });
+  registerCommand({
+    id: 'app.connectAgentWindow',
+    run: connectAgentWindow,
+    isEnabled: () => useSettingsStore.getState().settings.showExternalActivity,
+  });
+  registerCommand({
+    id: 'agent.forceUnlock',
+    run: () => forceUnlock().catch((err) => storageErrorToast(err, 'Could not unlock: ')),
+    isEnabled: () => useDocStore.getState().readOnly === 'agent-lock',
   });
 }

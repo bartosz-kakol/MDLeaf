@@ -105,6 +105,8 @@ export interface AppSettings {
   };
   lastOpenedDocId: string | null;
   persistRequested: boolean;
+  /** Show when the `mdleaf` command or an AI agent is in use. Off by default: it needs a browser permission. */
+  showExternalActivity: boolean;
 }
 
 export interface DocSummary {
@@ -150,6 +152,7 @@ export function defaultSettings(language: string | undefined): AppSettings {
     imageDialog: { optimize: false, maxWidthPx: 1600, format: 'webp', quality: 80 },
     lastOpenedDocId: null,
     persistRequested: false,
+    showExternalActivity: false,
   };
 }
 
@@ -188,5 +191,6 @@ export function normalizeSettings(raw: unknown, language: string | undefined): A
     },
     lastOpenedDocId: typeof r.lastOpenedDocId === 'string' ? r.lastOpenedDocId : null,
     persistRequested: !!r.persistRequested,
+    showExternalActivity: !!r.showExternalActivity,
   };
 }

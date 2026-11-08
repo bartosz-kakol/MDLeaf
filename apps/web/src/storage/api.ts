@@ -5,7 +5,8 @@ export type DiskStatus =
   | { docId: string; state: 'syncing' }
   | { docId: string; state: 'failed'; error: string }
   | { docId: string; state: 'permission-needed' }
-  | { docId: string; state: 'missing' };
+  | { docId: string; state: 'missing' }
+  | { docId: string; state: 'changed-on-disk' };
 
 export type StorageEvent = { type: 'diskStatus'; status: DiskStatus } | { type: 'settings-reset' } | { type: 'docs-changed' };
 
