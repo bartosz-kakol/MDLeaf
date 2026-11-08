@@ -12,7 +12,7 @@
     "build:docs": "pnpm --filter @mdleaf/docs build",
     "lint": "biome ci .",
     "format": "biome format --write .",
-    "typecheck": "tsc -p packages/core && tsc -p apps/web && pnpm --filter @mdleaf/docs check",
+    "typecheck": "tsc -p packages/core && tsc -p packages/cli && tsc -p apps/web && pnpm --filter @mdleaf/docs check",
     "test": "vitest run",
     "test:browser": "vitest run --project storage-browser",
     "e2e": "playwright test",

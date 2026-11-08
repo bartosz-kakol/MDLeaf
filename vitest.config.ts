@@ -27,6 +27,14 @@ export default defineConfig({
       {
         extends: true,
         test: {
+          name: 'cli',
+          environment: 'node',
+          include: ['packages/cli/test/**/*.test.ts'],
+        },
+      },
+      {
+        extends: true,
+        test: {
           // Needs a real OPFS, so it runs in Chromium through Playwright.
           name: 'storage-browser',
           include: ['apps/web/src/**/*.browser.test.ts'],

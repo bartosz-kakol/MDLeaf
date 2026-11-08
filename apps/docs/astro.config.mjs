@@ -70,6 +70,7 @@ export default defineConfig({
             { label: 'Storage', slug: 'files/storage' },
             { label: 'The .mdl format', slug: 'files/mdl-format' },
             { label: 'Linked folders', slug: 'files/folders' },
+            { label: 'Command line and AI agents', slug: 'files/command-line' },
           ],
         },
         {

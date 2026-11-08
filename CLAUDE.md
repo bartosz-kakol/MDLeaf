@@ -10,6 +10,7 @@ MDLeaf: an offline-first PWA for paginated Markdown (real pages, running headers
   - `paginate/` numbering logic and the Paged.js handlers; `preview-runtime/` runs inside the preview iframe
   - `profiles/`, `themes/`, `css-contract/`, `assets/`, `mdl/`, `commands/catalog.ts`, `keybindings/`
 - `apps/web` — React app. `storage/opfsStorage.ts` is the only code touching OPFS (runs in `workers/storage.worker.ts` via Comlink). `services/session.ts` owns autosave, locks, render scheduling. `preview/PreviewHost.ts` owns the iframes. `commands/` holds the registry, handlers and the tinykeys dispatcher.
+- `packages/cli` (`@mdleaf/cli`) — the `mdleaf` command and MCP server (`mdleaf mcp`), for documents on disk (Markdown file, linked folder, `.mdl`). `input.ts` loads documents like the app, `lint.ts` is the editor's lint source without a view, `browser.ts` paginates/prints the built preview in headless Chrome/Edge from a 127.0.0.1 server, `mcp.ts` wraps them as tools.
 - `apps/docs` — Astro 5 + Starlight 0.37. `scripts/` generate reference partials and `.mdl` samples from `src/examples/*`.
 - `tests/e2e` — Playwright; `tests/fixtures` — documents used by the tests.
 
@@ -43,6 +44,7 @@ Narrow runs: `node_modules/.bin/vitest run --project core`, `npx playwright test
 - react-arborist must receive `dndRootElement` (the tree container). Otherwise react-dnd cancels every file drop on `window` and drops into the editor stop working.
 - Platform detection uses `navigator.platform` — the same test tinykeys uses for `$mod` — so shortcut labels and behaviour agree.
 - Preview code highlighting (`preview-runtime/highlight.ts`) lazy-loads the editor's grammars (`@codemirror/language-data`), coloured through the `--mdl-code-*` contract properties. `manualChunks` in `apps/web/vite.config.ts` gives each `@codemirror/*`/`@lezer/*` package its own chunk; without it the JS/HTML/CSS grammars land in the app's entry chunk and loading one boots the app inside the preview iframe (React error #299, highlighting silently missing). The preload helper needs its own chunk as well, or it joins `language-data` and every preview iframe loads CodeMirror (slow pagination, E17 timeouts).
+- The CLI only runs bundled (`pnpm --filter @mdleaf/cli build`, after `pnpm build`): plain Node gets `{ default }` for the CommonJS default export of `@vscode/markdown-it-katex`, and Vite's interop matches the app's. The bundle copies the preview build, preset themes and the syntax cheat sheet into `dist/resources`; from sources, `resources.ts` reads them from the repo. Its browser tests are `tests/e2e/cli.spec.ts` (Chromium only), since they need `apps/web/dist`.
 - The preview runtime also accepts messages when opened top-level (`/preview.html?mode=page`), posting results as a `mdleaf-preview` DOM event; the PDF tests rely on this.
 
 ## Decisions
