@@ -1,0 +1,27 @@
+{
+  "name": "@mdleaf/cli",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lint, inspect and export MDLeaf documents from the command line; also runs as a local MCP server.",
+  "bin": {
+    "mdleaf": "./dist/mdleaf.js"
+  },
+  "dependencies": {
+    "@codemirror/lang-markdown": "6.5.2",
+    "@codemirror/state": "6.7.6",
+    "@mdleaf/core": "workspace:*",
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "playwright-core": "1.64.1",
+    "zod": "4.6.7"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "7.3.7"
+  }
+}
